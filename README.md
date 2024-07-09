@@ -41,4 +41,6 @@ Encountered a bug or have suggestions for improvement? Don't hesitate to reach o
 
 Happy grappling!
 
-![Skyline]([https://bstats.org/signatures/bukkit/Skyline.svg])
+
+![MetaMorph Statistics](https://bstats.org/signatures/bukkit/MetaMorph.svg)
+![Skyline]([https://bstats.org/signatures/bukkit/Skyline.svg]) 
