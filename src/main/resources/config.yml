@@ -1,0 +1,30 @@
+Settings:
+  #Default item for skyline is 'LEAD', can be changed, but not been tested intensively.
+  #Add any valid material ID.
+  material: LEAD
+  model: 0
+  #The sound fired upon using the Skyline. Set to 'NONE' to disable sounds.
+  use_sound: ENTITY_ARROW_SHOOT
+  #The cooldown between each use. Set to 0, if you don't want to use it or a small number like 0.1.
+  cooldown: 5
+  #the item name of the skyline.
+  display: '&#329ba8&lSk&#55bdc9&lyli&#329ba8&lne'
+  #The item lore. the only valid placeholder is %power%.
+  lore:
+    - ''
+    - '&7&lPower level: &e&l%power%'
+    - ''
+    - '&7Right-Click in air to use'
+    - ''
+  #The amount of base speed for the arrow.
+  speed: 0.2
+  #The increment per power level over 0. example: level 10 would be base speed + speed_increment * 10.
+  speed_increment: 0.15
+  #The base velocity for velocity.
+  velocity: 0.3
+  #The increment per power level over 0.
+  velocity_increment: 0.3
+  #Set false to disable particles.
+  particles: true
+  #Just shows a few debug messages, feel free to disable if you don't have any issues. it's not the deep.
+  debug: true
