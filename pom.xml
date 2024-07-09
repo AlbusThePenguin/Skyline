@@ -5,14 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>me.AlbusThepenguin</groupId>
-  <artifactId>Skyline</artifactId>
-  <version>1.0.0</version>
+  <artifactId>skyline</artifactId>
+  <version>1.5</version>
   <packaging>jar</packaging>
 
   <name>Skyline</name>
 
   <properties>
-    <java.version>1.8</java.version>
+    <java.version>21</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
@@ -25,12 +25,27 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+            <annotationProcessorPaths>
+                <path>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.18.34</version>
+                </path>
+            </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
+        <version>3.6.0</version>
+          <configuration>
+              <relocations>
+                  <relocation>
+                      <pattern>org.bstats</pattern>
+                      <shadedPattern>me.albusthepenguin</shadedPattern>
+                  </relocation>
+              </relocations>
+          </configuration>
         <executions>
           <execution>
             <phase>package</phase>
@@ -66,6 +81,18 @@
           <artifactId>spigot-api</artifactId>
           <version>1.21-R0.1-SNAPSHOT</version>
           <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.34</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.bstats</groupId>
+          <artifactId>bstats-bukkit</artifactId>
+          <version>3.0.2</version>
+          <scope>compile</scope>
       </dependency>
   </dependencies>
 </project>
