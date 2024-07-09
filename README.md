@@ -41,4 +41,4 @@ Encountered a bug or have suggestions for improvement? Don't hesitate to reach o
 
 Happy grappling!
 
-![Skyline]([https://i.imgur.com/Px6V6pJ.jpg](https://bstats.org/signatures/bukkit/Skyline.svg))
+![Skyline]([https://bstats.org/signatures/bukkit/Skyline.svg])
