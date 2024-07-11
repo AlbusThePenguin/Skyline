@@ -67,10 +67,11 @@ public class Configuration {
 
     @SuppressWarnings("all")
     private File getFile(ConfigType configType) {
-        return switch (configType) {
-            case Messages -> new File(skyline.getDataFolder(), "messages.yml");
-            default -> new File(skyline.getDataFolder(), "config.yml");
-        };
+        if(configType == ConfigType.Messages) {
+            return new File(skyline.getDataFolder(), "messages.yml");
+        } else {
+            return new File(skyline.getDataFolder(), "config.yml");
+        }
     }
 
 }

@@ -7,6 +7,11 @@ Settings:
   use_sound: ENTITY_ARROW_SHOOT
   #The cooldown between each use. Set to 0, if you don't want to use it or a small number like 0.1.
   cooldown: 5
+  #Select between CHAT, TITLE and ACTIONBAR for where to display cooldown message. set it to cd_messages: [] to disable cooldown message.
+  cooldown_messages:
+    - CHAT
+    - TITLE
+    - ACTIONBAR
   #the item name of the skyline.
   display: '&#329ba8&lSk&#55bdc9&lyli&#329ba8&lne'
   #The item lore. the only valid placeholder is %power%.

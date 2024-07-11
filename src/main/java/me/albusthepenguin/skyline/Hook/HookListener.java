@@ -16,7 +16,10 @@
  */
 package me.albusthepenguin.skyline.Hook;
 
+import me.albusthepenguin.skyline.API.ConfigType;
 import me.albusthepenguin.skyline.Skyline;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -30,6 +33,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
 import java.util.UUID;
 
 public class HookListener implements Listener {
@@ -58,9 +62,25 @@ public class HookListener implements Listener {
                 }
 
                 if (hookHandler.hasCooldown(player)) {
-                    String message = skyline.getMessage("cooldown")
-                            .replace("%seconds%", String.valueOf(hookHandler.getTimeleft(player)));
-                    player.sendTitle("", skyline.color(message), 15, 15, 15);
+
+                    List<String> types = skyline.getConfiguration().getConfig(ConfigType.Config).getStringList("Settings.cooldown_messages");
+
+                    String message = skyline.color(
+                            skyline.getMessage("cooldown")
+                                    .replace("%seconds%", String.valueOf(hookHandler.getTimeleft(player)))
+                    );
+
+                    if(types.contains("CHAT")) {
+                        player.sendMessage(message);
+                    }
+
+                    if(types.contains("TITLE")) {
+                        player.sendTitle("", message, 15, 15, 15);
+                    }
+
+                    if(types.contains("ACTIONBAR")) {
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));
+                    }
                     return;
                 }
                 hookHandler.sendArrow(player, item);
