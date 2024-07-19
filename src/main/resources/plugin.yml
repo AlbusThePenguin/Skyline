@@ -1,7 +1,7 @@
 name: Skyline
 version: '${project.version}'
 main: me.albusthepenguin.skyline.Skyline
-api-version: '1.21'
+api-version: '1.20'
 commands:
   skyline:
     description: Skyline is a grappling hook type plugin.

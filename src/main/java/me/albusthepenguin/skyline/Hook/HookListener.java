@@ -79,7 +79,7 @@ public class HookListener implements Listener {
                     }
 
                     if(types.contains("ACTIONBAR")) {
-                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacy(message));
+                        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
                     }
                     return;
                 }

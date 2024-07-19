@@ -6,13 +6,13 @@
 
   <groupId>me.AlbusThepenguin</groupId>
   <artifactId>skyline</artifactId>
-  <version>1.6</version>
+  <version>1.7</version>
   <packaging>jar</packaging>
 
   <name>Skyline</name>
 
   <properties>
-    <java.version>21</java.version>
+    <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
