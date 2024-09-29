@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Commands;
+package me.albusthepenguin.skyline.Hook;
 
 import me.albusthepenguin.skyline.API.ConfigType;
-import me.albusthepenguin.skyline.API.SubCommand;
+import me.albusthepenguin.skyline.API.MinecraftSubCommand;
 import me.albusthepenguin.skyline.Misc.Configuration;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.command.ConsoleCommandSender;
@@ -25,13 +25,12 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class ReloadCommand extends SubCommand {
-
+public class ReloadConfigurations extends MinecraftSubCommand {
     private final Skyline skyline;
 
     private final Configuration configuration;
 
-    public ReloadCommand(Skyline skyline) {
+    public ReloadConfigurations(Skyline skyline) {
         this.skyline = skyline;
         this.configuration = skyline.getConfiguration();
     }
@@ -43,7 +42,7 @@ public class ReloadCommand extends SubCommand {
 
     @Override
     public String getPermission() {
-        return "skyline.admin";
+        return skyline.getAdminPermission();
     }
 
     @Override
@@ -53,6 +52,8 @@ public class ReloadCommand extends SubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
+        skyline.getLogger().info("issued console reload?");
+
         String syntax = skyline.getMessage("error_syntax")
                 .replace("%syntax%", getSyntax());
 
@@ -72,6 +73,8 @@ public class ReloadCommand extends SubCommand {
 
     @Override
     public void perform(ConsoleCommandSender console, String[] args) {
+
+        skyline.getLogger().info("issued console reload?");
 
         if(args.length != 1) {
             console.sendMessage("Incorrect syntax: " + getSyntax());

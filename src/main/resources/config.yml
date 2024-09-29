@@ -1,35 +1,80 @@
+#Feedback is always appreciated! Please rate @ spigot <3
 Settings:
-  #Default item for skyline is 'LEAD', can be changed, but not been tested intensively.
-  #Add any valid material ID.
+  # The default item used for the Skyline feature.
+  # Change to any valid Minecraft material ID; currently, it's set to 'LEAD'.
   material: LEAD
+
+  # The model ID for the item. This can specify custom models for the item.
   model: 0
-  #The sound fired upon using the Skyline. Set to 'NONE' to disable sounds.
+
+  # The sound effect played when using the Skyline.
+  # Set to 'NONE' if you want to disable sound effects completely.
   use_sound: ENTITY_ARROW_SHOOT
-  #The cooldown between each use. Set to 0, if you don't want to use it or a small number like 0.1.
+
+  # The cooldown time in seconds between uses of the Skyline.
+  # Set to 0 for no cooldown or use a small value like 0.1 for minimal delay.
   cooldown: 5
-  #Select between CHAT, TITLE and ACTIONBAR for where to display cooldown message. set it to cd_messages: [] to disable cooldown message.
+
+  # Specifies where cooldown messages will be displayed to the player.
+  # Choose from CHAT, TITLE, or ACTIONBAR.
+  # To disable cooldown messages, set this to an empty list: cd_messages: [].
   cooldown_messages:
     - CHAT
     - TITLE
     - ACTIONBAR
-  #the item name of the skyline.
+
+  # The display name of the Skyline item.
+  # You can use color codes for styling; e.g., '&l' for bold text.
   display: '&#329ba8&lSk&#55bdc9&lyli&#329ba8&lne'
-  #The item lore. the only valid placeholder is %power%.
+
+  # The lore for the Skyline item, displayed when hovering over it.
+  # The placeholder %power% will be replaced with the current power level.
   lore:
-    - ''
-    - '&7&lPower level: &e&l%power%'
-    - ''
-    - '&7Right-Click in air to use'
-    - ''
-  #The amount of base speed for the arrow.
+    - ''  # Empty line for spacing.
+    - '&7&lPower level: &e&l%power%'  # Displays power level in yellow.
+    - ''  # Empty line for spacing.
+    - '&7Right-Click in air to use'  # Instruction for use.
+    - ''  # Empty line for spacing.
+
+  # The base speed of the arrow when fired from the Skyline.
   speed: 0.2
-  #The increment per power level over 0. example: level 10 would be base speed + speed_increment * 10.
+
+  # The amount to increase the speed per power level.
+  # For example, if the power level is 10, the total speed will be calculated as:
+  # base speed + (speed_increment * power level).
   speed_increment: 0.15
-  #The base velocity for velocity.
+
+  # The base velocity of the arrow fired from the Skyline.
   velocity: 0.3
-  #The increment per power level over 0.
+
+  # The amount to increase the velocity per power level.
+  # Similar to speed, this will adjust the velocity based on the current power level.
   velocity_increment: 0.3
-  #Set false to disable particles.
+
+  # Enable or disable particle effects when using the Skyline.
+  # Set to true to show particles; set too false to disable them.
   particles: true
-  #Just shows a few debug messages, feel free to disable if you don't have any issues. it's not the deep.
+
+  # Enable debug messages to assist in troubleshooting.
+  # Set too false to disable debug messages when the plugin is functioning properly.
   debug: true
+
+# Configuration for the Skyline command functionality in-game.
+Command:
+  # The primary name for the Skyline command used in-game.
+  # Example: Setting this to 'skyline' means players will use /skyline in-game.
+  name: 'skyline'  # This defines the command players will type.
+
+  # A brief description of the /skyline command for help menus or command listings.
+  description: 'Explore the server in style!'  # Describe the command's purpose.
+
+  # Instructions on how to properly use the command.
+  # Provides users with an example usage format.
+  usage: '/skyline <sub command | optional>'  # Shows how to execute the command.
+
+  # A list of aliases for the /skyline command.
+  # Players can use these shortcuts to invoke the command.
+  # To disable aliases, simply set this to 'aliases: []'.
+  aliases:
+    - 'sky'   # Allow players to use /sky as a shortcut for /skyline.
+    - 'sl'    # Allow players to use /sl as a shortcut for /skyline.

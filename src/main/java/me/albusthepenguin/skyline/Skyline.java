@@ -18,16 +18,17 @@ package me.albusthepenguin.skyline;
 
 import lombok.Getter;
 import me.albusthepenguin.skyline.API.ConfigType;
-import me.albusthepenguin.skyline.Commands.CommandManager;
+import me.albusthepenguin.skyline.Hook.HookCommands;
 import me.albusthepenguin.skyline.Hook.HookHandler;
 import me.albusthepenguin.skyline.Hook.HookListener;
 import me.albusthepenguin.skyline.Misc.Configuration;
 import me.albusthepenguin.skyline.Misc.Debug;
 import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 @Getter
 public final class Skyline extends JavaPlugin {
@@ -42,6 +43,8 @@ public final class Skyline extends JavaPlugin {
 
     private final String adminPermission = "skyline.admin";
 
+    private String commandLabel;
+
     @Override
     public void onEnable() {
         debug = new Debug(this);
@@ -53,14 +56,40 @@ public final class Skyline extends JavaPlugin {
 
         hookHandler = new HookHandler(this);
 
-        PluginCommand skylineCommand = getCommand("skyline");
-        if(skylineCommand != null) {
-            skylineCommand.setExecutor(new CommandManager(this));
-        }
-
         getServer().getPluginManager().registerEvents(new HookListener(this, hookHandler), this);
 
+        buildInGameCommand();
+
         new Metrics(this, 22149);
+    }
+
+    private void buildInGameCommand() {
+        ConfigurationSection section = this.configuration.getConfig(ConfigType.Config).getConfigurationSection("Command");
+
+        if (section == null) {
+            throw new IllegalArgumentException("Could not find Commands section in config.yml. Cannot load default commands.");
+        }
+
+        this.commandLabel = section.getString("name");
+        if (this.commandLabel == null || this.commandLabel.isEmpty()) {
+            throw new IllegalArgumentException("The 'name' field is missing or empty in the Commands section of config.yml.");
+        }
+
+        String description = section.getString("description");
+        if (description == null || description.isEmpty()) {
+            throw new IllegalArgumentException("The 'description' field is missing or empty in the Commands section of config.yml.");
+        }
+
+        String usageMessage = section.getString("usage");
+        if (usageMessage == null || usageMessage.isEmpty()) {
+            throw new IllegalArgumentException("The 'usage' field is missing or empty in the Commands section of config.yml.");
+        }
+
+        List<String> aliases = section.getStringList("aliases");
+
+        new HookCommands(
+                this, this.commandLabel, getAdminPermission(), description, usageMessage, aliases, this
+        );
     }
 
     public String getMessage(String path) {

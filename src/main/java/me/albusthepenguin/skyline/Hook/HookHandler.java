@@ -207,11 +207,9 @@ public class HookHandler {
 
         float velocityMultiplier = velocity + (increment * power);
 
-        // Reduce the Y component by 20-30%
-        float yScaleFactor = 0.7f; // Adjust this value to control the reduction in the Y component
+        float yScaleFactor = 0.7f;
         direction.setY(direction.getY() * yScaleFactor);
 
-        // Set player's velocity using the adjusted direction vector
         player.setVelocity(direction.multiply(velocityMultiplier));
 
         getArrows().remove(uuid);

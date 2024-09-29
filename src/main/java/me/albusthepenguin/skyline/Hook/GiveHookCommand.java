@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Commands;
+package me.albusthepenguin.skyline.Hook;
 
-import me.albusthepenguin.skyline.API.SubCommand;
+import me.albusthepenguin.skyline.API.MinecraftSubCommand;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -25,11 +25,11 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GiveCommand extends SubCommand {
+public class GiveHookCommand extends MinecraftSubCommand {
 
     private final Skyline skyline;
 
-    public GiveCommand(Skyline skyline) {
+    public GiveHookCommand(Skyline skyline) {
         this.skyline = skyline;
     }
 
@@ -45,49 +45,36 @@ public class GiveCommand extends SubCommand {
 
     @Override
     public String getSyntax() {
-        return "/skyline give <power> <player>";
+        return "/" + skyline.getCommandLabel() + " give <power> <player>";
     }
 
     @Override
     public void perform(Player player, String[] args) {
-        String syntax = skyline.getMessage("error_syntax")
-                .replace("%syntax%", getSyntax());
-
-        Player target = null;
-
-        if(args.length == 2) {
-            target = player;
-        } else if(args.length == 3) {
-            String playerName = args[2];
-            target = Bukkit.getPlayer(playerName);
-        } else {
-            player.sendMessage(skyline.color(syntax));
-        }
-
-        if(target == null) {
-            assert player != null;
-            player.sendMessage(skyline.color(skyline.getMessage("error_player")));
+        if (args.length < 2 || args.length > 3) {
+            sendSyntaxError(player);
             return;
         }
 
-        int value;
-
-        try {
-            value = Integer.parseInt(args[1]);
-        } catch (NumberFormatException e) {
-            player.sendMessage(skyline.color(syntax));
+        Player target = getTargetPlayer(player, args);
+        if (target == null) {
+            sendPlayerError(player);
             return;
         }
 
-        player.sendMessage(skyline.color(skyline.getMessage("success_given").replace("%player%", target.getName())));
+        Integer value = getValueFromArgs(args[1]);
+        if (value == null) {
+            sendSyntaxError(player);
+            return;
+        }
+
         skyline.getHookHandler().giveHook(target, value);
+        sendSuccessMessage(player, target);
     }
 
     @Override
     public void perform(ConsoleCommandSender console, String[] args) {
         if(args.length != 3) {
-            console.sendMessage("Incorrect syntax: " + getSyntax());
-            console.sendMessage("As console you need an online player target.");
+            console.sendMessage("Invalid syntax: " + getSyntax());
             return;
         }
 
@@ -98,18 +85,45 @@ public class GiveCommand extends SubCommand {
             return;
         }
 
-        int value;
-
-        try {
-            value = Integer.parseInt(args[1]);
-        } catch (NumberFormatException e) {
-            console.sendMessage("Invalid number format: " + args[1]);
+        Integer value = getValueFromArgs(args[1]);
+        if (value == null) {
+            console.sendMessage("Invalid syntax: " + getSyntax());
             return;
         }
 
         skyline.getHookHandler().giveHook(player, value);
         console.sendMessage("You gave " + playerName + " a skyline.");
     }
+
+    private void sendSyntaxError(Player player) {
+        String syntax = skyline.getMessage("error_syntax").replace("%syntax%", getSyntax());
+        player.sendMessage(skyline.color(syntax));
+    }
+
+    private void sendPlayerError(Player player) {
+        player.sendMessage(skyline.color(skyline.getMessage("error_player")));
+    }
+
+    private void sendSuccessMessage(Player player, Player target) {
+        String successMessage = skyline.getMessage("success_given").replace("%player%", target.getName());
+        player.sendMessage(skyline.color(successMessage));
+    }
+
+    private Player getTargetPlayer(Player player, String[] args) {
+        if (args.length == 2) {
+            return player;
+        }
+        return Bukkit.getPlayer(args[2]); // Retrieves target player by name
+    }
+
+    private Integer getValueFromArgs(String arg) {
+        try {
+            return Integer.parseInt(arg);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
     @Override
     public List<String> getSubcommandArguments(Player player, String[] args) {
         List<String> each = new ArrayList<>();
