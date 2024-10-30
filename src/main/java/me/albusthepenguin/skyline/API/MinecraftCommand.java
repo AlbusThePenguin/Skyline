@@ -64,7 +64,7 @@ public abstract class MinecraftCommand extends BukkitCommand implements TabExecu
      */
     @Override
     public boolean execute(CommandSender sender, @Nonnull String commandLabel, @Nonnull String[] args) {
-        if (sender.hasPermission("warden.command")) {
+        if (sender.hasPermission(Objects.requireNonNull(getPermission()))) {
             return onCommand(sender, this, commandLabel, args);
         } else {
             sender.sendMessage("You do not have permission to use this command.");

@@ -57,7 +57,7 @@ public class Configuration {
         try {
             getConfig(configType).save(getFile(configType));
         } catch (IOException e) {
-            skyline.getDebug().write("Could not save " + configType.name() + " because " + e);
+            skyline.getLogger().severe("Could not save " + configType.name() + " because " + e);
         }
     }
 

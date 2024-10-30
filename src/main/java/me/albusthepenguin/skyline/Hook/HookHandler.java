@@ -148,12 +148,12 @@ public class HookHandler {
         if(section == null) return null;
         String materialName = section.getString("material");
         if(materialName == null) {
-            skyline.getDebug().write("[NullPointer] Cannot find Settings.item material for grappling hook, please in Settings. in config.yml enter item: Material (Replace material with valid material ID).");
+            skyline.getLogger().warning("[NullPointer] Cannot find Settings.item material for grappling hook, please in Settings. in config.yml enter item: Material (Replace material with valid material ID).");
             return null;
         }
         Material material = Material.getMaterial(materialName);
         if(material == null) {
-            skyline.getDebug().write("[NullPointer] " + materialName + " is not a valid material.");
+            skyline.getLogger().warning("[NullPointer] " + materialName + " is not a valid material.");
             return null;
         }
 
@@ -171,7 +171,7 @@ public class HookHandler {
 
         String display = section.getString("display");
         if(display == null) {
-            skyline.getDebug().write("[NullPointer] Cannot find 'Settings.display' in config.yml. Please correct and reload the plugin.");
+            skyline.getLogger().warning("[NullPointer] Cannot find 'Settings.display' in config.yml. Please correct and reload the plugin.");
             return null;
         }
 

@@ -18,11 +18,10 @@ package me.albusthepenguin.skyline;
 
 import lombok.Getter;
 import me.albusthepenguin.skyline.API.ConfigType;
-import me.albusthepenguin.skyline.Hook.HookCommands;
+import me.albusthepenguin.skyline.Hook.Commands.HookCommands;
 import me.albusthepenguin.skyline.Hook.HookHandler;
 import me.albusthepenguin.skyline.Hook.HookListener;
 import me.albusthepenguin.skyline.Misc.Configuration;
-import me.albusthepenguin.skyline.Misc.Debug;
 import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
@@ -32,8 +31,6 @@ import java.util.List;
 
 @Getter
 public final class Skyline extends JavaPlugin {
-
-    private Debug debug;
 
     private Configuration configuration;
 
@@ -48,8 +45,6 @@ public final class Skyline extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        debug = new Debug(this);
-
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);
         configuration = new Configuration(this);
@@ -96,13 +91,13 @@ public final class Skyline extends JavaPlugin {
     public String getMessage(String path) {
         ConfigurationSection section = configuration.getConfig(ConfigType.Messages).getConfigurationSection("Messages");
         if(section == null) {
-            debug.write("[NullPointer] section in 'getMessage' returns null. Please notify developer.");
+            this.getLogger().warning("[NullPointer] section in 'getMessage' returns null. Please notify developer.");
             return "";
         }
 
         String message = section.getString(path);
         if(message == null) {
-            debug.write("[NullPointer] " + path + " is not available in messages.yml. Please add " + path + ": <message> in messages.yml to correct this.");
+            this.getLogger().warning("[NullPointer] " + path + " is not available in messages.yml. Please add " + path + ": <message> in messages.yml to correct this.");
             return "";
 
         }

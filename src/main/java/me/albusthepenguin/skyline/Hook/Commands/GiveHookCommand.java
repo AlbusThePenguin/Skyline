@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Hook;
+package me.albusthepenguin.skyline.Hook.Commands;
 
 import me.albusthepenguin.skyline.API.MinecraftSubCommand;
 import me.albusthepenguin.skyline.Skyline;
