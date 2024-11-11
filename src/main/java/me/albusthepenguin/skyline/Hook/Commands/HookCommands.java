@@ -82,9 +82,8 @@ public class HookCommands extends MinecraftCommand {
             return false; // Indicate that the command was not recognized
         }
 
-        // Default case if there are no arguments or subcommands
         sender.sendMessage(skyline.color("&cPlease provide a valid command!"));
-        return false; // Indicate that no command was executed
+        return false;
     }
 
     @Override
