@@ -79,7 +79,7 @@ public class HookCommands extends MinecraftCommand {
             }
 
             sender.sendMessage(skyline.color("&cUnknown command!"));
-            return false; // Indicate that the command was not recognized
+            return false; // Indicate that the command was not recognized x
         }
 
         sender.sendMessage(skyline.color("&cPlease provide a valid command!"));
