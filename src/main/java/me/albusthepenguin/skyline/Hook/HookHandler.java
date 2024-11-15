@@ -18,6 +18,7 @@ package me.albusthepenguin.skyline.Hook;
 
 import lombok.Getter;
 import me.albusthepenguin.skyline.API.ConfigType;
+import me.albusthepenguin.skyline.Misc.Message;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -29,11 +30,11 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Getter
 @SuppressWarnings("unused")
@@ -41,12 +42,15 @@ public class HookHandler {
 
     private final Skyline skyline;
 
+    private final Message message;
+
     private final Map<Player, Long> cooldown = new ConcurrentHashMap<>();
 
     private final Map<UUID, HookData> arrows = new ConcurrentHashMap<>();
 
-    public HookHandler(Skyline skyline) {
+    public HookHandler(Skyline skyline, Message message) {
         this.skyline = skyline;
+        this.message = message;
     }
 
     public void setCooldown(Player player, long cd) {
@@ -130,7 +134,7 @@ public class HookHandler {
         long defaultCooldown = section.getLong("cooldown") * 1000;
         int ticks = (int) (defaultCooldown / 50);
         setCooldown(player, defaultCooldown);
-        player.setCooldown(hook(1).getType(), ticks);
+        player.setCooldown(hook(1, player).getType(), ticks);
 
         HookData data = new HookData(player, power);
 
@@ -143,7 +147,7 @@ public class HookHandler {
         arrows.put(arrow.getUniqueId(), data);
     }
 
-    public ItemStack hook(int power) {
+    public ItemStack hook(int power, Player player) {
         ConfigurationSection section = skyline.getConfiguration().getConfig(ConfigType.Config).getConfigurationSection("Settings");
         if(section == null) return null;
         String materialName = section.getString("material");
@@ -175,24 +179,24 @@ public class HookHandler {
             return null;
         }
 
-        List<String> lore = new ArrayList<>();
+        //Todo: clean up this mess.. and the new codes soon.
 
-        for(String s : section.getStringList("lore")) {
-            if(s.contains("%power%")) {
-                s = s.replace("%power%", String.valueOf(power));
-            }
-            lore.add(skyline.color(s));
-        }
+        List<String> lore = section.getStringList("lore").stream()
+                .map(s -> message.setPlaceholders(s, Map.of("%power%", String.valueOf(power)), player))
+                        .map(skyline::color)
+                .collect(Collectors.toList());
 
         meta.setLore(lore);
 
-        meta.setDisplayName(skyline.color(display));
+        String displayName = skyline.color(display);
+
+        meta.setDisplayName(message.setPlaceholders(displayName, null, player));
         item.setItemMeta(meta);
         return item;
     }
 
     public void giveHook(Player player, int power) {
-        player.getInventory().addItem(hook(power));
+        player.getInventory().addItem(hook(power, player));
     }
 
     public void sendPlayer(Player player, UUID uuid, Location arrowLocation, Location playerLocation, int power) {
@@ -203,7 +207,7 @@ public class HookHandler {
         float velocity = (float) section.getDouble("velocity");
         float increment = (float) section.getDouble("velocity_increment");
 
-        Material material = hook(5).getType();
+        Material material = hook(5, player).getType();
 
         float velocityMultiplier = velocity + (increment * power);
 

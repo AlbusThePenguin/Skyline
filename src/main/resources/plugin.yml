@@ -2,3 +2,4 @@ name: Skyline
 version: '${project.version}'
 main: me.albusthepenguin.skyline.Skyline
 api-version: '1.20'
+softdepend: ["PlaceholderAPI"]

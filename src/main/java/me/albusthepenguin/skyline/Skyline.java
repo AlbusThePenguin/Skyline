@@ -22,6 +22,7 @@ import me.albusthepenguin.skyline.Hook.Commands.HookCommands;
 import me.albusthepenguin.skyline.Hook.HookHandler;
 import me.albusthepenguin.skyline.Hook.HookListener;
 import me.albusthepenguin.skyline.Misc.Configuration;
+import me.albusthepenguin.skyline.Misc.Message;
 import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
@@ -40,21 +41,26 @@ public final class Skyline extends JavaPlugin {
 
     private final String adminPermission = "skyline.admin";
 
+    private Message message;
+
     private String commandLabel;
     //update.
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-        getConfig().options().copyDefaults(true);
-        configuration = new Configuration(this);
-        configuration.load();
+        this.saveDefaultConfig();
+        this.getConfig().options().copyDefaults(true);
 
-        hookHandler = new HookHandler(this);
+        this.configuration = new Configuration(this);
+        this.configuration.load();
 
-        getServer().getPluginManager().registerEvents(new HookListener(this, hookHandler), this);
+        this.message = new Message();
 
-        buildInGameCommand();
+        this.hookHandler = new HookHandler(this, this.message);
+
+        this.getServer().getPluginManager().registerEvents(new HookListener(this, hookHandler), this);
+
+        this.buildInGameCommand();
 
         new Metrics(this, 22149);
     }
