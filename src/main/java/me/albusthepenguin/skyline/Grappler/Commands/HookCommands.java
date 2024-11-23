@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Hook.Commands;
+package me.albusthepenguin.skyline.Grappler.Commands;
 
-import me.albusthepenguin.skyline.API.MinecraftCommand;
-import me.albusthepenguin.skyline.API.MinecraftSubCommand;
+import me.albusthepenguin.skyline.Commands.MinecraftCommand;
+import me.albusthepenguin.skyline.Commands.MinecraftSubCommand;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -66,11 +66,10 @@ public class HookCommands extends MinecraftCommand {
                     if (sender instanceof Player player) {
                         if (player.hasPermission(subCommand.getPermission())) {
                             subCommand.perform(player, args);
-                            return true; // Command handled successfully
                         } else {
                             player.sendMessage(skyline.color(skyline.getMessage("error_permission")));
-                            return true; // Still return true for permission handling
                         }
+                        return true; // Command handled successfully
                     } else if (sender instanceof ConsoleCommandSender consoleCommandSender) {
                         subCommand.perform(consoleCommandSender, args);
                         return true; // Command handled successfully

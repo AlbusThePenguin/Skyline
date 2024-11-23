@@ -17,12 +17,12 @@
 package me.albusthepenguin.skyline;
 
 import lombok.Getter;
-import me.albusthepenguin.skyline.API.ConfigType;
-import me.albusthepenguin.skyline.Hook.Commands.HookCommands;
-import me.albusthepenguin.skyline.Hook.HookHandler;
-import me.albusthepenguin.skyline.Hook.HookListener;
-import me.albusthepenguin.skyline.Misc.Configuration;
-import me.albusthepenguin.skyline.Misc.Message;
+import me.albusthepenguin.skyline.Config.ConfigType;
+import me.albusthepenguin.skyline.Grappler.Auditor;
+import me.albusthepenguin.skyline.Grappler.Commands.HookCommands;
+import me.albusthepenguin.skyline.Grappler.Handler;
+import me.albusthepenguin.skyline.Config.Configuration;
+import me.albusthepenguin.skyline.Config.Message;
 import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
@@ -35,7 +35,7 @@ public final class Skyline extends JavaPlugin {
 
     private Configuration configuration;
 
-    private HookHandler hookHandler;
+    private Handler handler;
 
     private final String usePermission = "skyline.use";
 
@@ -56,9 +56,9 @@ public final class Skyline extends JavaPlugin {
 
         this.message = new Message();
 
-        this.hookHandler = new HookHandler(this, this.message);
+        this.handler = new Handler(this);
 
-        this.getServer().getPluginManager().registerEvents(new HookListener(this, hookHandler), this);
+        this.getServer().getPluginManager().registerEvents(new Auditor(this, handler), this);
 
         this.buildInGameCommand();
 

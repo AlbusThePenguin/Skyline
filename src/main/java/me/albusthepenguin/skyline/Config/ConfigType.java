@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Hook;
+package me.albusthepenguin.skyline.Config;
 
-import org.bukkit.entity.Player;
-
-public record HookData(Player player, int power) {
+public enum ConfigType {
+    Config, Messages
 
 }

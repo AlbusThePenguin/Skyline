@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Hook.Commands;
+package me.albusthepenguin.skyline.Grappler.Commands;
 
-import me.albusthepenguin.skyline.API.MinecraftSubCommand;
+import me.albusthepenguin.skyline.Commands.MinecraftSubCommand;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -67,7 +67,7 @@ public class GiveHookCommand extends MinecraftSubCommand {
             return;
         }
 
-        skyline.getHookHandler().giveHook(target, value);
+        skyline.getHandler().getGrappler().create(target, value);
         sendSuccessMessage(player, target);
     }
 
@@ -91,7 +91,7 @@ public class GiveHookCommand extends MinecraftSubCommand {
             return;
         }
 
-        skyline.getHookHandler().giveHook(player, value);
+        skyline.getHandler().getGrappler().create(player, value);
         console.sendMessage("You gave " + playerName + " a skyline.");
     }
 

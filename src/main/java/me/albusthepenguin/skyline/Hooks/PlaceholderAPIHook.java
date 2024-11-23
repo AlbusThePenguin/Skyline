@@ -1,4 +1,4 @@
-package me.albusthepenguin.skyline.Misc;
+package me.albusthepenguin.skyline.Hooks;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.OfflinePlayer;
@@ -6,7 +6,7 @@ import org.bukkit.OfflinePlayer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class Placeholder {
+public class PlaceholderAPIHook {
 
     /**
      * Replaces both custom placeholders and PlaceholderAPI placeholders

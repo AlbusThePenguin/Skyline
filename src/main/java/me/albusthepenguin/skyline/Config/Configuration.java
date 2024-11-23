@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Misc;
+package me.albusthepenguin.skyline.Config;
 
-import me.albusthepenguin.skyline.API.ConfigType;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.configuration.file.YamlConfiguration;
 

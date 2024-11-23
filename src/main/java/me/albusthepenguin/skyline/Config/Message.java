@@ -1,5 +1,6 @@
-package me.albusthepenguin.skyline.Misc;
+package me.albusthepenguin.skyline.Config;
 
+import me.albusthepenguin.skyline.Hooks.PlaceholderAPIHook;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -14,11 +15,11 @@ public class Message {
 
     private final boolean placeholderAPIHooked;
 
-    private final Placeholder placeholder;
+    private final PlaceholderAPIHook placeholder;
 
     public Message() {
         this.placeholderAPIHooked = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
-        this.placeholder = this.placeholderAPIHooked ? new Placeholder() : null;
+        this.placeholder = this.placeholderAPIHooked ? new PlaceholderAPIHook() : null;
     }
 
 

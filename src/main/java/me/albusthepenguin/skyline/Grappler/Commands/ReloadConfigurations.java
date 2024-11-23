@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Skyline. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.albusthepenguin.skyline.Hook.Commands;
+package me.albusthepenguin.skyline.Grappler.Commands;
 
-import me.albusthepenguin.skyline.API.ConfigType;
-import me.albusthepenguin.skyline.API.MinecraftSubCommand;
-import me.albusthepenguin.skyline.Misc.Configuration;
+import me.albusthepenguin.skyline.Config.ConfigType;
+import me.albusthepenguin.skyline.Commands.MinecraftSubCommand;
+import me.albusthepenguin.skyline.Config.Configuration;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
