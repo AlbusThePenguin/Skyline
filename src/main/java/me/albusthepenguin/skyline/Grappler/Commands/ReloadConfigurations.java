@@ -24,15 +24,15 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 public class ReloadConfigurations extends MinecraftSubCommand {
-    private final Skyline skyline;
 
     private final Configuration configuration;
 
     public ReloadConfigurations(Skyline skyline) {
-        this.skyline = skyline;
-        this.configuration = skyline.getConfiguration();
+        super(skyline);
+        this.configuration = super.getSkyline().getConfiguration();
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ReloadConfigurations extends MinecraftSubCommand {
 
     @Override
     public String getPermission() {
-        return skyline.getAdminPermission();
+        return super.getSkyline().getAdminPermission();
     }
 
     @Override
@@ -52,30 +52,22 @@ public class ReloadConfigurations extends MinecraftSubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
-        skyline.getLogger().info("issued console reload?");
-
-        String syntax = skyline.getMessage("error_syntax")
-                .replace("%syntax%", getSyntax());
-
         if(args.length != 1) {
-            player.sendMessage(skyline.color(syntax));
+            player.sendMessage(super.getMessage().get("error_syntax", Map.of("%syntax%", getSyntax()), true));
             return;
         }
 
-        String reloadMessage = skyline.getMessage("success_reload");
+        player.sendMessage(super.getMessage().get("success_reload", Map.of("%syntax%", getSyntax()), true));
 
         for(ConfigType configType : ConfigType.values()) {
             configuration.reload(configType);
             configuration.save(configType);
-            player.sendMessage(skyline.color(reloadMessage).replace("%type%", configType.name()));
+            player.sendMessage(super.getMessage().get("success_reload", Map.of("%type%", configType.name()), true));
         }
     }
 
     @Override
     public void perform(ConsoleCommandSender console, String[] args) {
-
-        skyline.getLogger().info("issued console reload?");
-
         if(args.length != 1) {
             console.sendMessage("Incorrect syntax: " + getSyntax());
             return;

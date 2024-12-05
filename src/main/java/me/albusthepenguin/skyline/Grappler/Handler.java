@@ -69,7 +69,7 @@ public class Handler {
         if (world == null) return;
 
         Vector direction = player.getEyeLocation().getDirection();
-        int power = grappler.power(itemStack);
+        int power = grappler.getPower(itemStack);
 
         ConfigurationSection section = getSettings();
         float speed = (float) section.getDouble("speed");

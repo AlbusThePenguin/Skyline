@@ -16,6 +16,9 @@
  */
 package me.albusthepenguin.skyline.Commands;
 
+import lombok.Getter;
+import me.albusthepenguin.skyline.Config.Message;
+import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -27,7 +30,17 @@ import java.util.List;
  * Subclasses of this class should define the specific behavior, permissions,
  * and argument handling for each subcommand.
  */
+@Getter
 public abstract class MinecraftSubCommand {
+
+    private final Skyline skyline;
+
+    private final Message message;
+
+    protected MinecraftSubCommand(Skyline skyline) {
+        this.skyline = skyline;
+        this.message = this.skyline.getMessage();
+    }
 
     /**
      * Gets the name of the subcommand.

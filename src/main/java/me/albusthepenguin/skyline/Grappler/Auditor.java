@@ -1,6 +1,7 @@
 package me.albusthepenguin.skyline.Grappler;
 
 import me.albusthepenguin.skyline.Config.ConfigType;
+import me.albusthepenguin.skyline.Config.Message;
 import me.albusthepenguin.skyline.Misc.Data;
 import me.albusthepenguin.skyline.Skyline;
 import net.md_5.bungee.api.ChatMessageType;
@@ -20,16 +21,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Auditor implements Listener {
 
     private final Skyline skyline;
 
+    private final Message message;
+
     private final Handler handler;
 
     public Auditor(Skyline skyline, Handler handler) {
         this.skyline = skyline;
+        this.message = this.skyline.getMessage();
         this.handler = handler;
     }
 
@@ -49,17 +54,14 @@ public class Auditor implements Listener {
             return;
         }
 
-        if(!handler.getGrappler().valid(itemStack)) {
+        if(!handler.getGrappler().isGrappler(itemStack)) {
             return;
         }
 
         if(handler.getCooldowns().has(player)) {
             List<String> types = skyline.getConfiguration().getConfig(ConfigType.Config).getStringList("Settings.cooldown_messages");
 
-            String message = skyline.color(
-                    skyline.getMessage("cooldown")
-                            .replace("%seconds%", String.valueOf(handler.getCooldowns().timeLeft(player)))
-            );
+            String message = this.message.get("cooldown", Map.of("%seconds%", String.valueOf(this.handler.getCooldowns().timeLeft(player))), true);
 
             if(types.contains("CHAT")) {
                 player.sendMessage(message);
@@ -83,7 +85,7 @@ public class Auditor implements Listener {
     public void onLeash(PlayerLeashEntityEvent event) {
         Player player = event.getPlayer();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if(itemStack.hasItemMeta() && handler.getGrappler().valid(itemStack)) {
+        if(itemStack.hasItemMeta() && handler.getGrappler().isGrappler(itemStack)) {
             event.setCancelled(true);
             player.updateInventory(); //This is a version issue.
         }

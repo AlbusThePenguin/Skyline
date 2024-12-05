@@ -35,7 +35,7 @@ public class Grappler {
      * @param itemStack the item in question.
      * @return if it is a valid grappling hook.
      */
-    public boolean valid(@Nonnull ItemStack itemStack) {
+    public boolean isGrappler(@Nonnull ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
 
@@ -48,7 +48,7 @@ public class Grappler {
      * @param itemStack the item in question
      * @return the power of the item.
      */
-    public int power(@Nonnull ItemStack itemStack) {
+    public int getPower(@Nonnull ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return 0;
 
@@ -56,7 +56,13 @@ public class Grappler {
         return container.getOrDefault(this.key, PersistentDataType.INTEGER, 0);
     }
 
-    public void create(Player player, int power) {
+    /**
+     * Creates the grappler
+     * @param player player
+     * @param power power
+     * <p>Place's it in the player's inventory.</p>
+     */
+    public void createGrappler(Player player, int power) {
         ConfigurationSection section = skyline.getConfiguration().getConfig(ConfigType.Config).getConfigurationSection("Settings");
 
         if(section == null) {
@@ -89,13 +95,12 @@ public class Grappler {
         container.set(this.key, PersistentDataType.INTEGER, power);
 
         List<String> lore = section.getStringList("lore").stream()
-                .map(s -> message.setPlaceholders(s, Map.of("%power%", String.valueOf(power)), player))
-                .map(skyline::color)
+                .map(s -> message.setPlaceholders(s, Map.of("%power%", String.valueOf(power)), player, true))
                 .toList();
 
         itemMeta.setLore(lore);
 
-        itemMeta.setDisplayName(skyline.color(display));
+        itemMeta.setDisplayName(this.message.color(display));
 
         itemStack.setItemMeta(itemMeta);
 

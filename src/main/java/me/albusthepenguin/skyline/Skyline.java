@@ -23,7 +23,6 @@ import me.albusthepenguin.skyline.Grappler.Commands.HookCommands;
 import me.albusthepenguin.skyline.Grappler.Handler;
 import me.albusthepenguin.skyline.Config.Configuration;
 import me.albusthepenguin.skyline.Config.Message;
-import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -54,7 +53,7 @@ public final class Skyline extends JavaPlugin {
         this.configuration = new Configuration(this);
         this.configuration.load();
 
-        this.message = new Message();
+        this.message = new Message(this);
 
         this.handler = new Handler(this);
 
@@ -90,44 +89,7 @@ public final class Skyline extends JavaPlugin {
         List<String> aliases = section.getStringList("aliases");
 
         new HookCommands(
-                this, this.commandLabel, getAdminPermission(), description, usageMessage, aliases, this
+                this, this.commandLabel, getAdminPermission(), description, usageMessage, aliases
         );
-    }
-
-    public String getMessage(String path) {
-        ConfigurationSection section = configuration.getConfig(ConfigType.Messages).getConfigurationSection("Messages");
-        if(section == null) {
-            this.getLogger().warning("[NullPointer] section in 'getMessage' returns null. Please notify developer.");
-            return "";
-        }
-
-        String message = section.getString(path);
-        if(message == null) {
-            this.getLogger().warning("[NullPointer] " + path + " is not available in messages.yml. Please add " + path + ": <message> in messages.yml to correct this.");
-            return "";
-
-        }
-        return message;
-    }
-
-    public String color(String text) {
-        String WITH_DELIMITER = "((?<=%1$s)|(?=%1$s))";
-        String[] texts = text.split(String.format(WITH_DELIMITER, "&"));
-
-        StringBuilder finalText = new StringBuilder();
-
-        for (int i = 0; i < texts.length; i++) {
-            if (texts[i].equalsIgnoreCase("&")) {
-                i++;
-                if (texts[i].charAt(0) == '#') {
-                    finalText.append(ChatColor.of(texts[i].substring(0, 7))).append(texts[i].substring(7));
-                } else {
-                    finalText.append(ChatColor.translateAlternateColorCodes('&', "&" + texts[i]));
-                }
-            } else {
-                finalText.append(texts[i]);
-            }
-        }
-        return finalText.toString();
     }
 }

@@ -24,13 +24,12 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GiveHookCommand extends MinecraftSubCommand {
 
-    private final Skyline skyline;
-
-    public GiveHookCommand(Skyline skyline) {
-        this.skyline = skyline;
+    protected GiveHookCommand(Skyline skyline) {
+        super(skyline);
     }
 
     @Override
@@ -40,35 +39,35 @@ public class GiveHookCommand extends MinecraftSubCommand {
 
     @Override
     public String getPermission() {
-        return skyline.getAdminPermission();
+        return super.getSkyline().getAdminPermission();
     }
 
     @Override
     public String getSyntax() {
-        return "/" + skyline.getCommandLabel() + " give <power> <player>";
+        return "/" + super.getSkyline().getCommandLabel() + " give <power> <player>";
     }
 
     @Override
     public void perform(Player player, String[] args) {
         if (args.length < 2 || args.length > 3) {
-            sendSyntaxError(player);
+            player.sendMessage(super.getMessage().get("error_syntax", Map.of("%syntax%", getSyntax()), true));
             return;
         }
 
         Player target = getTargetPlayer(player, args);
         if (target == null) {
-            sendPlayerError(player);
+            player.sendMessage(super.getMessage().get("error_player", null, true));
             return;
         }
 
         Integer value = getValueFromArgs(args[1]);
         if (value == null) {
-            sendSyntaxError(player);
+            player.sendMessage(super.getMessage().get("error_syntax", Map.of("%syntax%", getSyntax()), true));
             return;
         }
 
-        skyline.getHandler().getGrappler().create(target, value);
-        sendSuccessMessage(player, target);
+        super.getSkyline().getHandler().getGrappler().createGrappler(target, value);
+        player.sendMessage(super.getMessage().get("error_player", Map.of("%player%", target.getName()), true));
     }
 
     @Override
@@ -91,22 +90,8 @@ public class GiveHookCommand extends MinecraftSubCommand {
             return;
         }
 
-        skyline.getHandler().getGrappler().create(player, value);
+        super.getSkyline().getHandler().getGrappler().createGrappler(player, value);
         console.sendMessage("You gave " + playerName + " a skyline.");
-    }
-
-    private void sendSyntaxError(Player player) {
-        String syntax = skyline.getMessage("error_syntax").replace("%syntax%", getSyntax());
-        player.sendMessage(skyline.color(syntax));
-    }
-
-    private void sendPlayerError(Player player) {
-        player.sendMessage(skyline.color(skyline.getMessage("error_player")));
-    }
-
-    private void sendSuccessMessage(Player player, Player target) {
-        String successMessage = skyline.getMessage("success_given").replace("%player%", target.getName());
-        player.sendMessage(skyline.color(successMessage));
     }
 
     private Player getTargetPlayer(Player player, String[] args) {

@@ -23,7 +23,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -33,28 +32,25 @@ import java.util.Objects;
 
 public class HookCommands extends MinecraftCommand {
 
-    private final Skyline skyline;
-
     private final ArrayList<MinecraftSubCommand> subcommands = new ArrayList<>();
 
     /**
      * Constructor for creating a new command.
      *
-     * @param plugin       the plugin.
+     * @param skyline       the plugin.
      * @param name         The name of the command.
      * @param permission   The permission for the index command. For sub commands a player will need both this + the sub command permission.
      * @param description  The description of the command.
      * @param usageMessage The usage message for the command.
      * @param aliases      A list of aliases for the command.
      */
-    public HookCommands(@Nonnull Plugin plugin, @Nonnull String name, @Nonnull String permission, @Nonnull String description, @Nonnull String usageMessage, @Nonnull List<String> aliases, Skyline skyline) {
-        super(plugin, name, permission, description, usageMessage, aliases);
-        this.skyline = skyline;
+    public HookCommands(@Nonnull Skyline skyline, @Nonnull String name, @Nonnull String permission, @Nonnull String description, @Nonnull String usageMessage, @Nonnull List<String> aliases) {
+        super(skyline, name, permission, description, usageMessage, aliases);
 
         this.subcommands.add(new GiveHookCommand(skyline));
         this.subcommands.add(new ReloadConfigurations(skyline));
 
-        this.register(plugin);
+        this.register(super.getSkyline());
     }
 
     @Override
@@ -67,7 +63,7 @@ public class HookCommands extends MinecraftCommand {
                         if (player.hasPermission(subCommand.getPermission())) {
                             subCommand.perform(player, args);
                         } else {
-                            player.sendMessage(skyline.color(skyline.getMessage("error_permission")));
+                            player.sendMessage(super.getMessage().get("error_permission", null, true));
                         }
                         return true; // Command handled successfully
                     } else if (sender instanceof ConsoleCommandSender consoleCommandSender) {
@@ -76,12 +72,8 @@ public class HookCommands extends MinecraftCommand {
                     }
                 }
             }
-
-            sender.sendMessage(skyline.color("&cUnknown command!"));
-            return false; // Indicate that the command was not recognized x
+            return false;
         }
-
-        sender.sendMessage(skyline.color("&cPlease provide a valid command!"));
         return false;
     }
 

@@ -16,6 +16,9 @@
  */
 package me.albusthepenguin.skyline.Commands;
 
+import lombok.Getter;
+import me.albusthepenguin.skyline.Config.Message;
+import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
@@ -34,20 +37,25 @@ import java.util.Objects;
  * This class implements both CommandExecutor and TabCompleter to handle command execution and tab completion.
  * Subclasses must provide implementations for the abstract methods to define command-specific behavior.
  */
+@Getter
 @SuppressWarnings("unused")
 public abstract class MinecraftCommand extends BukkitCommand implements TabExecutor {
+    private final Skyline skyline;
 
+    private final Message message;
     /**
      * Constructor for creating a new command.
-     * @param plugin        the plugin.
+     * @param skyline        the plugin.
      * @param name          The name of the command.
      * @param permission    The permission for the index command. For sub commands a player will need both this + the sub command permission.
      * @param description   The description of the command.
      * @param usageMessage  The usage message for the command.
      * @param aliases       A list of aliases for the command.
      */
-    public MinecraftCommand(@Nonnull Plugin plugin, @Nonnull String name, @Nonnull String permission, @Nonnull String description, @Nonnull String usageMessage, @Nonnull List<String> aliases) {
+    public MinecraftCommand(@Nonnull Skyline skyline, @Nonnull String name, @Nonnull String permission, @Nonnull String description, @Nonnull String usageMessage, @Nonnull List<String> aliases) {
         super(name);
+        this.skyline = skyline;
+        this.message = this.skyline.getMessage();
         setDescription(description);
         setUsage(usageMessage);
         setAliases(aliases);
