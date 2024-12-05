@@ -57,8 +57,6 @@ public class ReloadConfigurations extends MinecraftSubCommand {
             return;
         }
 
-        player.sendMessage(super.getMessage().get("success_reload", Map.of("%syntax%", getSyntax()), true));
-
         for(ConfigType configType : ConfigType.values()) {
             configuration.reload(configType);
             configuration.save(configType);

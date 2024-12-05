@@ -4,7 +4,7 @@ import me.albusthepenguin.skyline.Hooks.PlaceholderAPIHook;
 import me.albusthepenguin.skyline.Skyline;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
@@ -50,11 +50,12 @@ public class Message {
 
 
     public String get(@Nonnull String path, @Nullable Map<String, String> replacements, boolean colored) {
-        YamlConfiguration config = this.configuration.getConfig(ConfigType.Messages);
-        if(config == null) {
-            throw new IllegalArgumentException("configuration is null. Please verify that messages.yml is located in /plugins/metamorph folder.");
+        ConfigurationSection section = this.configuration.getConfig(ConfigType.Messages).getConfigurationSection("Messages");
+        if(section == null) {
+            throw new IllegalArgumentException("configuration is null. Please verify that messages.yml is located in /plugins/skyline folder.");
         }
-        String message = config.getString(path);
+
+        String message = section.getString(path);
         if(message == null) {
             message = path;
         }

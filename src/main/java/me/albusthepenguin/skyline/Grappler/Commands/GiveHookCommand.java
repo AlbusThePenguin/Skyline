@@ -67,7 +67,7 @@ public class GiveHookCommand extends MinecraftSubCommand {
         }
 
         super.getSkyline().getHandler().getGrappler().createGrappler(target, value);
-        player.sendMessage(super.getMessage().get("error_player", Map.of("%player%", target.getName()), true));
+        player.sendMessage(super.getMessage().get("success_given", Map.of("%player%", target.getName()), true));
     }
 
     @Override
