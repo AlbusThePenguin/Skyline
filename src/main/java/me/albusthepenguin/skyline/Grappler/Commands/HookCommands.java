@@ -63,7 +63,7 @@ public class HookCommands extends MinecraftCommand {
                         if (player.hasPermission(subCommand.getPermission())) {
                             subCommand.perform(player, args);
                         } else {
-                            player.sendMessage(super.getMessage().get("error_permission", null, true));
+                            player.sendMessage(super.getMessage().get("error_permission", null, null,true));
                         }
                         return true; // Command handled successfully
                     } else if (sender instanceof ConsoleCommandSender consoleCommandSender) {

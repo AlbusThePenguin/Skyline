@@ -4,11 +4,14 @@ import me.albusthepenguin.skyline.Hooks.PlaceholderAPIHook;
 import me.albusthepenguin.skyline.Skyline;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -16,60 +19,97 @@ import java.util.Map;
  */
 public class Message {
 
-    private final Configuration configuration;
+    private final Skyline skyline;
 
     private final boolean placeholderAPIHooked;
 
     private final PlaceholderAPIHook placeholder;
 
+    private String lang;
+
+    private YamlConfiguration configuration;
+
+    private File langFile;
+
     public Message(Skyline skyline) {
-        this.configuration = skyline.getConfiguration();
+
+        this.skyline = skyline;
+
+        this.lang = this.skyline.getConfiguration().getYamlConfiguration().getString("language", "en_US.yml");
+
         this.placeholderAPIHooked = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
         this.placeholder = this.placeholderAPIHooked ? new PlaceholderAPIHook() : null;
+
+        this.load();
     }
 
+    public void reload() {
+        this.lang = this.skyline.getConfiguration().getYamlConfiguration().getString("language", "en_US.yml");
 
-    public String setPlaceholders(String message, @Nullable Map<String, String> placeholders, @Nullable Player player, boolean colored) {
-        if(placeholderAPIHooked) {
-            message = this.placeholder.set(message, player);
-        }
+        this.load();
+    }
 
-        if(placeholders != null) {
-            for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                if (key != null && value != null) {
-                    message = message.replace(key, value);
+    private void load() {
+        File langDirectory = new File(this.skyline.getDataFolder(), "lang");
+
+        if (!langDirectory.exists()) {
+            boolean created = langDirectory.mkdirs();
+
+            if (created) {
+                ArrayList<String> files = new ArrayList<>(Arrays.asList(
+                        "da_DK", "de_DE", "en_US",
+                        "es_ES", "fr_FR", "no_NO",
+                        "pl_PL", "ru_RU", "sv_SE"
+                ));
+
+                for (String languageName : files) {
+                    File file = new File(langDirectory, languageName + ".yml"); // Use the correct directory here
+
+                    if(!file.exists()) {
+                        this.skyline.saveResource("lang" + File.separator + languageName + ".yml", false); // Save to the 'lang' folder inside dataFolder
+                    }
                 }
             }
         }
 
-        if(colored) return this.color(message);
-        return message;
-    }
-
-
-    public String get(@Nonnull String path, @Nullable Map<String, String> replacements, boolean colored) {
-        ConfigurationSection section = this.configuration.getConfig(ConfigType.Messages).getConfigurationSection("Messages");
-        if(section == null) {
-            throw new IllegalArgumentException("configuration is null. Please verify that messages.yml is located in /plugins/skyline folder.");
+        if(this.lang == null) {
+            throw new IllegalArgumentException("Found no valid language file configured in config.yml example: language: 'EN_US'");
         }
 
-        String message = section.getString(path);
+        this.langFile = new File(langDirectory, this.lang + ".yml");
+
+        this.loadYaml();
+    }
+
+    private void loadYaml() {
+        if(this.langFile == null || !this.langFile.exists()) {
+            throw new IllegalArgumentException("The language file is null or does not exist.");
+        }
+
+        this.skyline.getLogger().info("Loaded language: " + this.lang);
+        this.configuration = YamlConfiguration.loadConfiguration(this.langFile);
+    }
+
+    public String get(@Nonnull String path, @Nullable Map<String, String> placeholders, @Nullable Player player, boolean colored) {
+        if(path.equalsIgnoreCase("") || path.equalsIgnoreCase(" ")) return path;
+        String message = this.configuration.getString(path);
         if(message == null) {
             message = path;
         }
 
-        if(replacements != null && !replacements.isEmpty()) {
-            for(Map.Entry<String, String> entry : replacements.entrySet()) {
+        if(this.placeholderAPIHooked) {
+            message = this.placeholder.set(message, player);
+        }
+
+        if(placeholders != null && !placeholders.isEmpty()) {
+            for(Map.Entry<String, String> entry : placeholders.entrySet()) {
                 if(message.contains(entry.getKey())) {
                     message = message.replace(entry.getKey(), entry.getValue());
                 }
             }
         }
 
-        if(colored) return this.color(message);
-        return message;
+        return colored ? this.color(message) : message;
     }
 
     public String color(String text) {

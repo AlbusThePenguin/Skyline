@@ -1,0 +1,6 @@
+cooldown: '&bDu kan bruge dette igen om &e{cooldown}&b sekunder.'
+error_syntax: '&cForkert syntaks: &e{syntax}'
+error_player: '&cKan ikke finde denne spiller online.'
+error_permission: '&cDu mangler tilladelse til at bruge dette.'
+success_reload: '&aKonfigurationer er blevet genindlæst.'
+success_given: '&aDu gav &e{player} &aa &#329ba8&lSk&#55bdc9&lyli&#329ba8&lne&a.'

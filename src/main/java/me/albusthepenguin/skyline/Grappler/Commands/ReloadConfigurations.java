@@ -16,9 +16,7 @@
  */
 package me.albusthepenguin.skyline.Grappler.Commands;
 
-import me.albusthepenguin.skyline.Config.ConfigType;
 import me.albusthepenguin.skyline.Commands.MinecraftSubCommand;
-import me.albusthepenguin.skyline.Config.Configuration;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -28,11 +26,8 @@ import java.util.Map;
 
 public class ReloadConfigurations extends MinecraftSubCommand {
 
-    private final Configuration configuration;
-
     public ReloadConfigurations(Skyline skyline) {
         super(skyline);
-        this.configuration = super.getSkyline().getConfiguration();
     }
 
     @Override
@@ -52,16 +47,15 @@ public class ReloadConfigurations extends MinecraftSubCommand {
 
     @Override
     public void perform(Player player, String[] args) {
-        if(args.length != 1) {
-            player.sendMessage(super.getMessage().get("error_syntax", Map.of("%syntax%", getSyntax()), true));
+        if (args.length != 1) {
+            player.sendMessage(super.getMessage().get("error_syntax", Map.of("{syntax}", getSyntax()), null, true));
             return;
         }
 
-        for(ConfigType configType : ConfigType.values()) {
-            configuration.reload(configType);
-            configuration.save(configType);
-            player.sendMessage(super.getMessage().get("success_reload", Map.of("%type%", configType.name()), true));
-        }
+
+        this.reload();
+
+        player.sendMessage(super.getMessage().get("success_reload", null, null, true));
     }
 
     @Override
@@ -71,12 +65,14 @@ public class ReloadConfigurations extends MinecraftSubCommand {
             return;
         }
 
-        String message = "%type% has been reloaded.";
-        for(ConfigType configType : ConfigType.values()) {
-            configuration.reload(configType);
-            configuration.save(configType);
-            console.sendMessage(message.replace("%type%", configType.name()));
-        }
+        this.reload();
+
+        console.sendMessage("Reloaded configurations.");
+    }
+
+    private void reload() {
+        this.getSkyline().getConfiguration().reload();
+        this.getSkyline().getMessage().reload();
     }
 
     @Override

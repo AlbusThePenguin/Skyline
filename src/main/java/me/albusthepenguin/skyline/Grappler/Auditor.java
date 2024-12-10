@@ -1,6 +1,5 @@
 package me.albusthepenguin.skyline.Grappler;
 
-import me.albusthepenguin.skyline.Config.ConfigType;
 import me.albusthepenguin.skyline.Config.Message;
 import me.albusthepenguin.skyline.Misc.Data;
 import me.albusthepenguin.skyline.Skyline;
@@ -59,9 +58,9 @@ public class Auditor implements Listener {
         }
 
         if(handler.getCooldowns().has(player)) {
-            List<String> types = skyline.getConfiguration().getConfig(ConfigType.Config).getStringList("Settings.cooldown_messages");
+            List<String> types = skyline.getConfiguration().getYamlConfiguration().getStringList("Settings.cooldown_messages");
 
-            String message = this.message.get("cooldown", Map.of("%seconds%", String.valueOf(this.handler.getCooldowns().timeLeft(player))), true);
+            String message = this.message.get("cooldown", Map.of("{cooldown}", String.valueOf(this.handler.getCooldowns().timeLeft(player))), null, true);
 
             if(types.contains("CHAT")) {
                 player.sendMessage(message);

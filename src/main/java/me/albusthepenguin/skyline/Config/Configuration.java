@@ -16,61 +16,52 @@
  */
 package me.albusthepenguin.skyline.Config;
 
+import lombok.Getter;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Configuration {
 
     private final Skyline skyline;
 
-    private final static Map<ConfigType, YamlConfiguration> configurations = new ConcurrentHashMap<>();
+    @Getter
+    private YamlConfiguration yamlConfiguration;
 
     public Configuration(Skyline skyline) {
         this.skyline = skyline;
+
+        this.load();
     }
 
     public void load() {
-        for(ConfigType configType : ConfigType.values()) {
-            File file = getFile(configType);
+        File file = getFile();
 
-            if(!file.exists()) {
-                skyline.saveResource(file.getName(), false);
-            }
-
-            YamlConfiguration yamlConfiguration = YamlConfiguration.loadConfiguration(file);
-            yamlConfiguration.options().copyDefaults(true);
-            configurations.putIfAbsent(configType, yamlConfiguration);
+        if(!file.exists()) {
+            this.skyline.saveResource(file.getName(), false);
         }
+
+        this.yamlConfiguration = YamlConfiguration.loadConfiguration(file);
     }
 
-    public YamlConfiguration getConfig(ConfigType configType) {
-        return configurations.getOrDefault(configType, null);
+    public void reload() {
+        this.load();
+
+        this.save();
     }
 
-    public void save(ConfigType configType) {
+    public void save() {
         try {
-            getConfig(configType).save(getFile(configType));
+            this.yamlConfiguration.save(getFile());
         } catch (IOException e) {
-            skyline.getLogger().severe("Could not save " + configType.name() + " because " + e);
+            skyline.getLogger().severe("Could not save config.yml because " + e);
         }
     }
 
-    public void reload(ConfigType configType) {
-        configurations.put(configType, YamlConfiguration.loadConfiguration(getFile(configType)));
-    }
-
-    @SuppressWarnings("all")
-    private File getFile(ConfigType configType) {
-        if(configType == ConfigType.Messages) {
-            return new File(skyline.getDataFolder(), "messages.yml");
-        } else {
-            return new File(skyline.getDataFolder(), "config.yml");
-        }
+    private File getFile() {
+        return new File(this.skyline.getDataFolder(), "config.yml");
     }
 
 }

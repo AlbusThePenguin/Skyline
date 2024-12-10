@@ -1,7 +1,6 @@
 package me.albusthepenguin.skyline.Grappler;
 
 import lombok.Getter;
-import me.albusthepenguin.skyline.Config.ConfigType;
 import me.albusthepenguin.skyline.Misc.Cooldowns;
 import me.albusthepenguin.skyline.Misc.Data;
 import me.albusthepenguin.skyline.Skyline;
@@ -36,7 +35,7 @@ public class Handler {
      * Helper to get the configuration section safely.
      */
     private ConfigurationSection getSettings() {
-        ConfigurationSection section = skyline.getConfiguration().getConfig(ConfigType.Config).getConfigurationSection("Settings");
+        ConfigurationSection section = skyline.getConfiguration().getYamlConfiguration().getConfigurationSection("Settings");
         if (section == null) {
             throw new IllegalArgumentException("Could not use Skyline because the config.yml is invalid.");
         }

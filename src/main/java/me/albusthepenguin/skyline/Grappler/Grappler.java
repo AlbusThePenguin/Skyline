@@ -1,6 +1,5 @@
 package me.albusthepenguin.skyline.Grappler;
 
-import me.albusthepenguin.skyline.Config.ConfigType;
 import me.albusthepenguin.skyline.Config.Message;
 import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.Material;
@@ -63,7 +62,7 @@ public class Grappler {
      * <p>Place's it in the player's inventory.</p>
      */
     public void createGrappler(Player player, int power) {
-        ConfigurationSection section = skyline.getConfiguration().getConfig(ConfigType.Config).getConfigurationSection("Settings");
+        ConfigurationSection section = skyline.getConfiguration().getYamlConfiguration().getConfigurationSection("Settings");
 
         if(section == null) {
             throw new IllegalArgumentException("Could not create a skyline cause the config.yml is invalid. Please delete config.yml and backup the old one.");
@@ -95,7 +94,7 @@ public class Grappler {
         container.set(this.key, PersistentDataType.INTEGER, power);
 
         List<String> lore = section.getStringList("lore").stream()
-                .map(s -> message.setPlaceholders(s, Map.of("%power%", String.valueOf(power)), player, true))
+                .map(s -> message.get(s, Map.of("%power%", String.valueOf(power)), player, true))
                 .toList();
 
         itemMeta.setLore(lore);

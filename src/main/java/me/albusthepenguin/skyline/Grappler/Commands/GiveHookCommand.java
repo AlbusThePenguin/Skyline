@@ -50,24 +50,24 @@ public class GiveHookCommand extends MinecraftSubCommand {
     @Override
     public void perform(Player player, String[] args) {
         if (args.length < 2 || args.length > 3) {
-            player.sendMessage(super.getMessage().get("error_syntax", Map.of("%syntax%", getSyntax()), true));
+            player.sendMessage(super.getMessage().get("error_syntax", Map.of("{syntax}", getSyntax()), null,true));
             return;
         }
 
         Player target = getTargetPlayer(player, args);
         if (target == null) {
-            player.sendMessage(super.getMessage().get("error_player", null, true));
+            player.sendMessage(super.getMessage().get("error_player", null, null,true));
             return;
         }
 
         Integer value = getValueFromArgs(args[1]);
         if (value == null) {
-            player.sendMessage(super.getMessage().get("error_syntax", Map.of("%syntax%", getSyntax()), true));
+            player.sendMessage(super.getMessage().get("error_syntax", Map.of("{syntax}", getSyntax()), null,true));
             return;
         }
 
         super.getSkyline().getHandler().getGrappler().createGrappler(target, value);
-        player.sendMessage(super.getMessage().get("success_given", Map.of("%player%", target.getName()), true));
+        player.sendMessage(super.getMessage().get("success_given", Map.of("{player}", target.getName()), null, true));
     }
 
     @Override

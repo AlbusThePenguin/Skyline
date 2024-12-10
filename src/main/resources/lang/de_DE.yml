@@ -1,0 +1,6 @@
+cooldown: '&bDu kannst dies wieder in &e{cooldown}&b Sekunden verwenden.'
+error_syntax: '&cFalsche Syntax: &e{syntax}'
+error_player: '&cKann diesen Spieler nicht online finden.'
+error_permission: '&cDu hast nicht die Berechtigung, dies zu verwenden.'
+success_reload: '&aKonfigurationen wurden neu geladen.'
+success_given: '&aDu hast &e{player} &aa &#329ba8&lSk&#55bdc9&lyli&#329ba8&lne&a gegeben.'

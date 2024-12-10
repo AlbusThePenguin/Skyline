@@ -17,7 +17,6 @@
 package me.albusthepenguin.skyline;
 
 import lombok.Getter;
-import me.albusthepenguin.skyline.Config.ConfigType;
 import me.albusthepenguin.skyline.Grappler.Auditor;
 import me.albusthepenguin.skyline.Grappler.Commands.HookCommands;
 import me.albusthepenguin.skyline.Grappler.Handler;
@@ -65,7 +64,7 @@ public final class Skyline extends JavaPlugin {
     }
 
     private void buildInGameCommand() {
-        ConfigurationSection section = this.configuration.getConfig(ConfigType.Config).getConfigurationSection("Command");
+        ConfigurationSection section = this.configuration.getYamlConfiguration().getConfigurationSection("Command");
 
         if (section == null) {
             throw new IllegalArgumentException("Could not find Commands section in config.yml. Cannot load default commands.");

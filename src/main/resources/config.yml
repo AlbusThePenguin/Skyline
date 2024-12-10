@@ -55,10 +55,6 @@ Settings:
   # Set to true to show particles; set too false to disable them.
   particles: true
 
-  # Enable debug messages to assist in troubleshooting.
-  # Set too false to disable debug messages when the plugin is functioning properly.
-  debug: true
-
 # Configuration for the Skyline command functionality in-game.
 Command:
   # The primary name for the Skyline command used in-game.
@@ -78,3 +74,5 @@ Command:
   aliases:
     - 'sky'   # Allow players to use /sky as a shortcut for /skyline.
     - 'sl'    # Allow players to use /sl as a shortcut for /skyline.
+
+language: 'en_US' #Find or create your own translation in /plugins/skyline/lang/.
