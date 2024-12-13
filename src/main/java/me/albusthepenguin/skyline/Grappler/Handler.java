@@ -46,6 +46,7 @@ public class Handler {
      * Handles the player being launched using the grappling hook.
      */
     public void yeetPlayer(Player player, UUID arrowUUID, Location playerLocation, Location arrowLocation, int power) {
+
         Vector path = arrowLocation.toVector().subtract(playerLocation.toVector()).normalize();
         ConfigurationSection section = getSettings();
 
@@ -53,6 +54,7 @@ public class Handler {
         float increment = (float) section.getDouble("velocity_increment");
         float multiplier = velocity + (increment * power);
 
+        player.teleport(player.getLocation().add(0, 0.10, 0)); //Make this configurable.
         path.setY(path.getY() * 0.7f);
         player.setVelocity(path.multiply(multiplier));
 
