@@ -50,11 +50,13 @@ public class Handler {
         Vector path = arrowLocation.toVector().subtract(playerLocation.toVector()).normalize();
         ConfigurationSection section = getSettings();
 
-        float velocity = (float) section.getDouble("velocity");
-        float increment = (float) section.getDouble("velocity_increment");
+        float velocity = (float) section.getDouble("velocity", 0.3);
+        float increment = (float) section.getDouble("velocity_increment", 0.3);
         float multiplier = velocity + (increment * power);
 
-        player.teleport(player.getLocation().add(0, 0.10, 0)); //Make this configurable.
+        double teleport_y = section.getDouble("teleport_y", 0.10);
+
+        player.teleport(player.getLocation().add(0, teleport_y, 0));
         path.setY(path.getY() * 0.7f);
         player.setVelocity(path.multiply(multiplier));
 
@@ -73,8 +75,8 @@ public class Handler {
         int power = grappler.getPower(itemStack);
 
         ConfigurationSection section = getSettings();
-        float speed = (float) section.getDouble("speed");
-        float increment = (float) section.getDouble("speed_increment");
+        float speed = (float) section.getDouble("speed", 0.2);
+        float increment = (float) section.getDouble("speed_increment", 0.15);
         float finalSpeed = speed + (increment * power);
         float spread = 0.0f;
 
@@ -82,7 +84,7 @@ public class Handler {
         Arrow arrow = world.spawnArrow(location, direction, finalSpeed, spread, Arrow.class);
 
         // Display particles
-        if (section.getBoolean("particles")) {
+        if (section.getBoolean("particles", true)) {
             Particle.DustTransition dustOptions = new Particle.DustTransition(Color.fromRGB(50, 155, 168), Color.WHITE, 2);
             int startOffset = 5;
             for (int i = startOffset; i < 10 + startOffset; i++) {
@@ -92,9 +94,9 @@ public class Handler {
         }
 
         // Set cooldown
-        long cooldownMs = section.getLong("cooldown") * 1000;
+        long cooldownMs = section.getLong("cooldown", 5) * 1000;
         int ticks = (int) (cooldownMs / 50);
-        Material material = getValidMaterial(section.getString("material"));
+        Material material = getValidMaterial(section.getString("material", "LEAD"));
 
         player.setCooldown(material, ticks);
         cooldowns.set(player, cooldownMs);
@@ -104,14 +106,12 @@ public class Handler {
         arrows.put(arrow.getUniqueId(), data);
 
         // Play sound
-        String soundName = section.getString("use_sound");
-        if (soundName != null && !soundName.equalsIgnoreCase("NONE")) {
-            try {
-                Sound sound = Sound.valueOf(soundName.toUpperCase());
-                player.playSound(location, sound, 1f, 1f);
-            } catch (IllegalArgumentException e) {
-                skyline.getLogger().warning("Invalid sound name in config: " + soundName);
-            }
+        String soundName = section.getString("use_sound", "ENTITY_ARROW_SHOOT");
+        try {
+            Sound sound = Sound.valueOf(soundName.toUpperCase());
+            player.playSound(location, sound, 1f, 1f);
+        } catch (IllegalArgumentException e) {
+            skyline.getLogger().warning("Invalid sound name in config: " + soundName);
         }
     }
 

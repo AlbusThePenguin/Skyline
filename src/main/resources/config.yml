@@ -15,6 +15,10 @@ Settings:
   # Set to 0 for no cooldown or use a small value like 0.1 for minimal delay.
   cooldown: 5
 
+  # The level of teleport for the player from the ground in order
+  # to make the player not getting dragged around the ground. Default value 0.10
+  teleport_y: 0.10
+
   # Specifies where cooldown messages will be displayed to the player.
   # Choose from CHAT, TITLE, or ACTIONBAR.
   # To disable cooldown messages, set this to an empty list: cd_messages: [].
@@ -75,4 +79,8 @@ Command:
     - 'sky'   # Allow players to use /sky as a shortcut for /skyline.
     - 'sl'    # Allow players to use /sl as a shortcut for /skyline.
 
-language: 'en_US' #Find or create your own translation in /plugins/skyline/lang/.
+#You can find available languages supported in /plugins/skyline/lang/
+language: 'en_US'
+
+#Enable update checker, to get notified if you're using an outdated version? (true - false)
+update-checker: true

@@ -68,20 +68,14 @@ public class Grappler {
             throw new IllegalArgumentException("Could not create a skyline cause the config.yml is invalid. Please delete config.yml and backup the old one.");
         }
 
-        String materialName = section.getString("material");
-        if(materialName == null) {
-            throw new IllegalArgumentException("'Settings.material' in config.yml is null.");
-        }
+        String materialName = section.getString("material", "LEAD");
 
         Material material = Material.getMaterial(materialName);
         if(material == null) {
             throw new IllegalArgumentException("'Settings.material' in config.yml is not a valid material.");
         }
 
-        String display = section.getString("display");
-        if(display == null) {
-            throw new IllegalArgumentException("'Settings.display' in config.yml is null.");
-        }
+        String display = section.getString("display", "&#329ba8&lSk&#55bdc9&lyli&#329ba8&lne");
 
         ItemStack itemStack = new ItemStack(material);
         ItemMeta itemMeta = itemStack.getItemMeta();

@@ -22,6 +22,7 @@ import me.albusthepenguin.skyline.Grappler.Commands.HookCommands;
 import me.albusthepenguin.skyline.Grappler.Handler;
 import me.albusthepenguin.skyline.Config.Configuration;
 import me.albusthepenguin.skyline.Config.Message;
+import me.albusthepenguin.skyline.Misc.UpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,7 +43,6 @@ public final class Skyline extends JavaPlugin {
     private Message message;
 
     private String commandLabel;
-    //update.
 
     @Override
     public void onEnable() {
@@ -61,6 +61,15 @@ public final class Skyline extends JavaPlugin {
         this.buildInGameCommand();
 
         new Metrics(this, 22149);
+
+        if(this.configuration.getYamlConfiguration().getBoolean("update-checker", true)) {
+            new UpdateChecker(this, 103201).getVersion(version -> {
+                String yourVersion = this.getDescription().getVersion();
+                if(!yourVersion.equals(version)) {
+                    this.getLogger().info("There is a new version available. You are using version: " + yourVersion + " and the latest version is " + version);
+                }
+            });
+        }
     }
 
     private void buildInGameCommand() {
@@ -70,20 +79,9 @@ public final class Skyline extends JavaPlugin {
             throw new IllegalArgumentException("Could not find Commands section in config.yml. Cannot load default commands.");
         }
 
-        this.commandLabel = section.getString("name");
-        if (this.commandLabel == null || this.commandLabel.isEmpty()) {
-            throw new IllegalArgumentException("The 'name' field is missing or empty in the Commands section of config.yml.");
-        }
-
-        String description = section.getString("description");
-        if (description == null || description.isEmpty()) {
-            throw new IllegalArgumentException("The 'description' field is missing or empty in the Commands section of config.yml.");
-        }
-
-        String usageMessage = section.getString("usage");
-        if (usageMessage == null || usageMessage.isEmpty()) {
-            throw new IllegalArgumentException("The 'usage' field is missing or empty in the Commands section of config.yml.");
-        }
+        this.commandLabel = section.getString("name", "skyline");
+        String description = section.getString("description", "Explore the server like spider-man");
+        String usageMessage = section.getString("usage", "/skyline <sub command | optional>");
 
         List<String> aliases = section.getStringList("aliases");
 
