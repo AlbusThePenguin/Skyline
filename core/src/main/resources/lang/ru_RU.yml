@@ -1,0 +1,6 @@
+cooldown: '&bВы можете использовать это снова через &e{cooldown}&b секунд.'
+error_syntax: '&cНеверный синтаксис: &e{syntax}'
+error_player: '&cНе удается найти этого игрока в сети.'
+error_permission: '&cУ вас нет прав на использование этого.'
+success_reload: '&aКонфигурации были перезагружены.'
+success_given: '&aВы передали &e{player} &aa &#329ba8&lSk&#55bdc9&lyli&#329ba8&lne&a.'

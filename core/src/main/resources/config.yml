@@ -1,0 +1,86 @@
+#Feedback is always appreciated! Please rate @ spigot <3
+Settings:
+  # The default item used for the Skyline feature.
+  # Change to any valid Minecraft material ID; currently, it's set to 'LEAD'.
+  material: LEAD
+
+  # The model ID for the item. This can specify custom models for the item.
+  model: 0
+
+  # The sound effect played when using the Skyline.
+  # Set to 'NONE' if you want to disable sound effects completely.
+  use_sound: ENTITY_ARROW_SHOOT
+
+  # The cooldown time in seconds between uses of the Skyline.
+  # Set to 0 for no cooldown or use a small value like 0.1 for minimal delay.
+  cooldown: 5
+
+  # The level of teleport for the player from the ground in order
+  # to make the player not getting dragged around the ground. Default value 0.10
+  teleport_y: 0.10
+
+  # Specifies where cooldown messages will be displayed to the player.
+  # Choose from CHAT, TITLE, or ACTIONBAR.
+  # To disable cooldown messages, set this to an empty list: cd_messages: [].
+  cooldown_messages:
+    - CHAT
+    - TITLE
+    - ACTIONBAR
+
+  # The display name of the Skyline item.
+  # You can use color codes for styling; e.g., '&l' for bold text.
+  display: '&#329ba8&lSk&#55bdc9&lyli&#329ba8&lne'
+
+  # The lore for the Skyline item, displayed when hovering over it.
+  # The placeholder %power% will be replaced with the current power level.
+  lore:
+    - ''  # Empty line for spacing.
+    - '&7&lPower level: &e&l%power%'  # Displays power level in yellow.
+    - ''  # Empty line for spacing.
+    - '&7Right-Click in air to use'  # Instruction for use.
+    - ''  # Empty line for spacing.
+
+  # The base speed of the arrow when fired from the Skyline.
+  speed: 0.2
+
+  # The amount to increase the speed per power level.
+  # For example, if the power level is 10, the total speed will be calculated as:
+  # base speed + (speed_increment * power level).
+  speed_increment: 0.15
+
+  # The base velocity of the arrow fired from the Skyline.
+  velocity: 0.3
+
+  # The amount to increase the velocity per power level.
+  # Similar to speed, this will adjust the velocity based on the current power level.
+  velocity_increment: 0.3
+
+  # Enable or disable particle effects when using the Skyline.
+  # Set to true to show particles; set too false to disable them.
+  particles: true
+
+# Configuration for the Skyline command functionality in-game.
+Command:
+  # The primary name for the Skyline command used in-game.
+  # Example: Setting this to 'skyline' means players will use /skyline in-game.
+  name: 'skyline'  # This defines the command players will type.
+
+  # A brief description of the /skyline command for help menus or command listings.
+  description: 'Explore the server in style!'  # Describe the command's purpose.
+
+  # Instructions on how to properly use the command.
+  # Provides users with an example usage format.
+  usage: '/skyline <sub command | optional>'  # Shows how to execute the command.
+
+  # A list of aliases for the /skyline command.
+  # Players can use these shortcuts to invoke the command.
+  # To disable aliases, simply set this to 'aliases: []'.
+  aliases:
+    - 'sky'   # Allow players to use /sky as a shortcut for /skyline.
+    - 'sl'    # Allow players to use /sl as a shortcut for /skyline.
+
+#You can find available languages supported in /plugins/skyline/lang/
+language: 'en_US'
+
+#Enable update checker, to get notified if you're using an outdated version? (true - false)
+update-checker: true

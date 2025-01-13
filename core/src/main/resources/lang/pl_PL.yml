@@ -1,0 +1,6 @@
+cooldown: '&bMożesz użyć tego ponownie za &e{cooldown}&b sekund.'
+error_syntax: '&cZła składnia: &e{syntax}'
+error_player: '&cNie można znaleźć tego gracza online.'
+error_permission: '&cBrakuje Ci uprawnień do używania tego.'
+success_reload: '&aKonfiguracje zostały przeładowane.'
+success_given: '&aDałeś &e{player} &aa &#329ba8&lSk&#55bdc9&lyli&#329ba8&lne&a.'

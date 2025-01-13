@@ -1,0 +1,6 @@
+cooldown: '&bDu kan använda detta igen om &e{cooldown}&b sekunder.'
+error_syntax: '&cFelaktig syntax: &e{syntax}'
+error_player: '&cKan inte hitta den spelaren online.'
+error_permission: '&cDu saknar behörighet att använda detta.'
+success_reload: '&aKonfigurationer har laddats om.'
+success_given: '&aDu gav &e{player} &aa &#329ba8&lSk&#55bdc9&lyli&#329ba8&lne&a.'

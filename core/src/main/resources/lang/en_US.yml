@@ -1,0 +1,6 @@
+cooldown: '&bYou can use this again in &e{cooldown}&b seconds.'
+error_syntax: '&cWrong syntax: &e{syntax}'
+error_player: '&cCant find that player online.'
+error_permission: '&cYou lack permission to use this.'
+success_reload: '&aConfigurations has been reloaded.'
+success_given: '&aYou gave &e{player} &aa &#329ba8&lSk&#55bdc9&lyli&#329ba8&lne&a.'
