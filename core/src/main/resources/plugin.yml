@@ -1,0 +1,5 @@
+name: Skyline
+version: '2.1.4'
+main: me.albusthepenguin.skyline.Skyline
+api-version: '1.16'
+softdepend: ["PlaceholderAPI"]
