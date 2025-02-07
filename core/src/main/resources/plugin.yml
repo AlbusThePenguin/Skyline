@@ -1,5 +1,5 @@
 name: Skyline
-version: '2.1.4'
+version: ${project.parent.version}
 main: me.albusthepenguin.skyline.Skyline
-api-version: '1.16'
+api-version: '1.20'
 softdepend: ["PlaceholderAPI"]

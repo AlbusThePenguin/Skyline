@@ -1,8 +1,15 @@
 #Feedback is always appreciated! Please rate @ spigot <3
 Settings:
   # The default item used for the Skyline feature.
+  # We only support version 1.20 material types.
   # Change to any valid Minecraft material ID; currently, it's set to 'LEAD'.
   material: LEAD
+
+  #Since we're now using a new animation where instead of an arrow being "thrown"
+  #in the direction facing you can throw 'any' item type supported in 1.20.
+  display_material: PLAYER_HEAD
+
+  display_size: 1
 
   # The model ID for the item. This can specify custom models for the item.
   model: 0
@@ -55,9 +62,24 @@ Settings:
   # Similar to speed, this will adjust the velocity based on the current power level.
   velocity_increment: 0.3
 
-  # Enable or disable particle effects when using the Skyline.
-  # Set to true to show particles; set too false to disable them.
-  particles: true
+  particles:
+    # Enable or disable particle effects when using the Skyline.
+    # Set to true to show particles; set to false to disable them.
+    enabled: true
+
+    # The number of particles spawned per step.
+    # Higher values create a denser effect.
+    amount: 2
+
+    # The size of each particle.
+    # Higher values create larger, more visible particles.
+    size: 2
+
+    # The RGB color of the particles.
+    # Customize by setting red (0-255), green (0-255), and blue (0-255) values.
+    color_r: 50    # Red component (0-255)
+    color_g: 155   # Green component (0-255)
+    color_b: 168   # Blue component (0-255)
 
 # Configuration for the Skyline command functionality in-game.
 Command:

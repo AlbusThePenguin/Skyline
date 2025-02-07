@@ -4,31 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1337b0a9-75e9-45db-8854-76f29a228373" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="1337b0a9-75e9-45db-8854-76f29a228373" name="Changes" comment="🌟 Skyline Update – Important Changes &amp; New Features!&#10;&#10;🚨 Dropped Support for Versions Below 1.20.1&#10;If you are using Minecraft 1.16+, please stick with Skyline v2.1.5.&#10;&#10;🔄 Major Changes &amp; Enhancements:&#10;&#10;    New Animation System: Instead of using an invisible arrow, Skyline now uses ItemDisplay to represent the grappling hook, allowing it to display any supported item type.&#10;    New Configuration Field:&#10;&#10;    settings:&#10;      display_material: &lt;material&gt;&#10;&#10;    This lets you customize the material of the displayed item.&#10;&#10;🛠 Improvements &amp; Fixes:&#10;&#10;    Placement Restrictions: Skyline can no longer be placed if the selected material is a block.&#10;    Consumption Prevention: If the selected material is a consumable, players won’t be able to eat or drink it.&#10;    Particle Customization: Added configuration options for particle colors, size, and amount to enhance visual effects.&#10;    Version Fix: The last update mistakenly caused a &quot;new version available&quot; message on startup due to an incorrect version number in plugin.yml. This has been fixed.&#10;&#10;📌 Updating Your Config:&#10;To take advantage of these new features, please update your config.yml by referring to the latest version here:&#10;👉 Skyline Config.yml&#10;&#10;🔜 Next Update (Planned):&#10;&#10;    Adding support for newer materials beyond Minecraft 1.20.1, even if the API doesn't officially support them yet.&#10;&#10;This makes the update clearer and more user-friendly. Let me know if you want any adjustments! 😊">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/commands/MinecraftCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/commands/MinecraftCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/commands/MinecraftSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/commands/MinecraftSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/events/SkylineSendArrowEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/events/SkylineSendArrowEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/events/SkylineSendPlayerEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/me/albusthepenguin/api/events/SkylineSendPlayerEvent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Commands/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Commands/CommandManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Commands/GiveHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Commands/GiveHook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Commands/Reload.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Commands/Reload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Configs/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Configs/Configuration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Configs/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Configs/Message.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/GrappleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/GrappleHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/GrappleListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/GrappleListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/Grappler.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/Grappler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/GrapplerEffects.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Grappler/GrapplerEffects.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Hooks/PlaceholderAPIHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Hooks/PlaceholderAPIHook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Misc/Cooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Misc/Cooldown.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Misc/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Misc/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Misc/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Misc/UpdateChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Skyline.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/me/albusthepenguin/skyline/Skyline.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/config.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/resources/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
@@ -77,7 +62,10 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
   <component name="RunAnythingCache">
@@ -166,6 +154,20 @@
       <option name="presentableId" value="Default" />
       <updated>1736868239964</updated>
     </task>
+    <task id="LOCAL-00001" summary="Multi module project ready.">
+      <option name="closed" value="true" />
+      <created>1737455560558</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737455560558</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Multi module project ready." />
+    <MESSAGE value=" Skyline Update – Important Changes &amp; New Features!&#10;&#10; Dropped Support for Versions Below 1.20.1&#10;If you are using Minecraft 1.16+, please stick with Skyline v2.1.5.&#10;&#10; Major Changes &amp; Enhancements:&#10;&#10;    New Animation System: Instead of using an invisible arrow, Skyline now uses ItemDisplay to represent the grappling hook, allowing it to display any supported item type.&#10;    New Configuration Field:&#10;&#10;    settings:&#10;      display_material: &lt;material&gt;&#10;&#10;    This lets you customize the material of the displayed item.&#10;&#10; Improvements &amp; Fixes:&#10;&#10;    Placement Restrictions: Skyline can no longer be placed if the selected material is a block.&#10;    Consumption Prevention: If the selected material is a consumable, players won’t be able to eat or drink it.&#10;    Particle Customization: Added configuration options for particle colors, size, and amount to enhance visual effects.&#10;    Version Fix: The last update mistakenly caused a &quot;new version available&quot; message on startup due to an incorrect version number in plugin.yml. This has been fixed.&#10;&#10; Updating Your Config:&#10;To take advantage of these new features, please update your config.yml by referring to the latest version here:&#10; Skyline Config.yml&#10;&#10; Next Update (Planned):&#10;&#10;    Adding support for newer materials beyond Minecraft 1.20.1, even if the API doesn't officially support them yet.&#10;&#10;This makes the update clearer and more user-friendly. Let me know if you want any adjustments! " />
+    <option name="LAST_COMMIT_MESSAGE" value=" Skyline Update – Important Changes &amp; New Features!&#10;&#10; Dropped Support for Versions Below 1.20.1&#10;If you are using Minecraft 1.16+, please stick with Skyline v2.1.5.&#10;&#10; Major Changes &amp; Enhancements:&#10;&#10;    New Animation System: Instead of using an invisible arrow, Skyline now uses ItemDisplay to represent the grappling hook, allowing it to display any supported item type.&#10;    New Configuration Field:&#10;&#10;    settings:&#10;      display_material: &lt;material&gt;&#10;&#10;    This lets you customize the material of the displayed item.&#10;&#10; Improvements &amp; Fixes:&#10;&#10;    Placement Restrictions: Skyline can no longer be placed if the selected material is a block.&#10;    Consumption Prevention: If the selected material is a consumable, players won’t be able to eat or drink it.&#10;    Particle Customization: Added configuration options for particle colors, size, and amount to enhance visual effects.&#10;    Version Fix: The last update mistakenly caused a &quot;new version available&quot; message on startup due to an incorrect version number in plugin.yml. This has been fixed.&#10;&#10; Updating Your Config:&#10;To take advantage of these new features, please update your config.yml by referring to the latest version here:&#10; Skyline Config.yml&#10;&#10; Next Update (Planned):&#10;&#10;    Adding support for newer materials beyond Minecraft 1.20.1, even if the API doesn't officially support them yet.&#10;&#10;This makes the update clearer and more user-friendly. Let me know if you want any adjustments! " />
   </component>
 </project>

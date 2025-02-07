@@ -28,10 +28,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -56,6 +58,34 @@ public class GrappleListener implements Listener {
         this.message = this.skyline.getMessage();
         this.handler = handler;
         this.cooldown = this.handler.getCooldown();
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        ItemStack itemStack = event.getItemInHand();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if(itemMeta == null) {
+            return;
+        }
+
+        if(handler.getGrappler().isGrappler(itemStack)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEat(PlayerItemConsumeEvent event) {
+        ItemStack itemStack = event.getItem();
+        ItemMeta itemMeta = itemStack.getItemMeta();
+
+        if(itemMeta == null) {
+            return;
+        }
+
+        if(handler.getGrappler().isGrappler(itemStack)) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -129,6 +159,7 @@ public class GrappleListener implements Listener {
         }
     }
 
+
     @EventHandler
     public void projectileHit(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Arrow arrow) {
@@ -142,6 +173,8 @@ public class GrappleListener implements Listener {
 
             Location arrowLocation = arrow.getLocation();
             Location playerLocation = player.getLocation();
+
+            if(data.display() != null) data.display().remove();
 
             handler.yeetPlayer(player, uuid, playerLocation, arrowLocation, data.power());
             arrow.remove();

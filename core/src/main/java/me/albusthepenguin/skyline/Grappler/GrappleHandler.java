@@ -25,8 +25,13 @@ import me.albusthepenguin.skyline.Skyline;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -67,7 +72,6 @@ public class GrappleHandler {
      * Handles the player being launched using the grappling hook.
      */
     public void yeetPlayer(Player player, UUID arrowUUID, Location playerLocation, Location arrowLocation, int power) {
-
         SkylineSendPlayerEvent event = new SkylineSendPlayerEvent(player);
         Bukkit.getPluginManager().callEvent(event);
         if(event.isCancelled()) {
@@ -84,10 +88,21 @@ public class GrappleHandler {
         double teleport_y = section.getDouble("teleport_y", 0.10);
 
         player.teleport(player.getLocation().add(0, teleport_y, 0));
+
         path.setY(path.getY() * 0.7f);
+
         player.setVelocity(path.multiply(multiplier));
 
         arrows.remove(arrowUUID);
+    }
+
+    private ItemStack getPlayerHead(Player player) {
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skull = (SkullMeta) item.getItemMeta();
+        assert skull != null;
+        skull.setOwningPlayer(player);
+        item.setItemMeta(skull);
+        return item;
     }
 
     /**
@@ -111,10 +126,41 @@ public class GrappleHandler {
         // Spawn arrow
         Arrow arrow = world.spawnArrow(location, direction, finalSpeed, spread, Arrow.class);
 
+        String displayMaterialName = section.getString("display_material", "LEAD");
+        Material displayMaterial = Material.getMaterial(displayMaterialName);
+
+        ItemDisplay display = null;
+
+        if(displayMaterial != null) {
+            display = world.spawn(location, ItemDisplay.class);
+
+            PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 5000, 5, false, false);
+            arrow.addCustomEffect(effect, true);
+
+            ItemStack displayItem;
+
+            if(displayMaterial == Material.PLAYER_HEAD) {
+                displayItem = this.getPlayerHead(player);
+            } else {
+                displayItem = new ItemStack(displayMaterial);
+            }
+
+            int displaySize = section.getInt("display_size", 1);
+            if(displaySize != 1 && displaySize > 0) {
+                Transformation transformation = display.getTransformation();
+                transformation.getScale().set(displaySize);
+                display.setTransformation(transformation);
+            }
+
+            display.setItemStack(displayItem);
+            arrow.addPassenger(display);
+        }
+
         SkylineSendArrowEvent event = new SkylineSendArrowEvent(player, arrow);
         Bukkit.getPluginManager().callEvent(event);
 
         if(event.isCancelled()) {
+            if(display != null) display.remove();
             arrow.remove(); //Remove the arrow.
             return;
         }
@@ -129,7 +175,7 @@ public class GrappleHandler {
         player.setCooldown(material, ticks);
         cooldown.set(player.getUniqueId(), cooldownMs);
 
-        Data data = new Data(player, power);
+        Data data = new Data(player, power, display);
         arrows.put(arrow.getUniqueId(), data);
     }
 

@@ -28,20 +28,27 @@ import org.bukkit.util.Vector;
 public class GrapplerEffects {
 
     public void sendParticles(@NonNull Player player, @NonNull Vector direction, @NonNull Location location, @NonNull ConfigurationSection section) {
-        if (section.getBoolean("particles", true)) {
-            Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(50, 155, 168), 2);
+        if (section.getBoolean("particles.enabled", true)) {
+            int particleAmount = section.getInt("particles.amount", 1);
+            int particleSize = section.getInt("particles.size", 1);
+
+            int r = section.getInt("particles.color_r", 50);
+            int g = section.getInt("particles.color_b", 155);
+            int b = section.getInt("particles.color_g", 168);
+
+            Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(r, g, b), particleSize);
+
             int startOffset = 5;
 
             for (int i = startOffset; i < 10 + startOffset; i++) {
                 Location particleLocation = location.clone().add(direction.clone().multiply(i));
-                player.spawnParticle(Particle.REDSTONE, particleLocation, 1, dustOptions);
+                player.spawnParticle(Particle.REDSTONE, particleLocation, particleAmount, dustOptions);
             }
         }
     }
 
     public void sendSound(@NonNull Player player, @NonNull Location location, @NonNull ConfigurationSection section) {
         String soundName = section.getString("use_sound", "ENTITY_ARROW_SHOOT");
-        assert soundName != null;
         try {
             Sound sound = Sound.valueOf(soundName.toUpperCase());
             player.playSound(location, sound, 1f, 1f);
