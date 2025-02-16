@@ -108,6 +108,11 @@ public class GrappleListener implements Listener {
             return;
         }
 
+        if(!player.hasPermission(this.skyline.getUsePermission())) {
+            player.sendMessage(this.message.get("error_permission", null, player, true));
+            return;
+        }
+
         UUID uuid = player.getUniqueId();
 
         if(this.cooldown.has(uuid)) {
