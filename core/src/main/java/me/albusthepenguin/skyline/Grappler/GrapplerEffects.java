@@ -22,7 +22,9 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 public class GrapplerEffects {
@@ -56,5 +58,4 @@ public class GrapplerEffects {
             throw new IllegalArgumentException("Invalid sound name in config: " + soundName);
         }
     }
-
 }

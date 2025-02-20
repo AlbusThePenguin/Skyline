@@ -84,8 +84,6 @@ public class Skyline extends JavaPlugin {
 
         List<String> aliases = section.getStringList("aliases");
 
-        assert description != null;
-        assert usageMessage != null;
         new CommandManager(
                 this, this.commandLabel, getAdminPermission(), description, usageMessage, aliases, this, this.message
         );

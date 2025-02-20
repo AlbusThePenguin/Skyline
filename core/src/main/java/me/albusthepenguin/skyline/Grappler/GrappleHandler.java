@@ -29,8 +29,6 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Transformation;
 import org.bukkit.util.Vector;
 
@@ -123,7 +121,6 @@ public class GrappleHandler {
         float finalSpeed = speed + (increment * power);
         float spread = 0.0f;
 
-        // Spawn arrow
         Arrow arrow = world.spawnArrow(location, direction, finalSpeed, spread, Arrow.class);
 
         String displayMaterialName = section.getString("display_material", "LEAD");
@@ -133,9 +130,6 @@ public class GrappleHandler {
 
         if(displayMaterial != null) {
             display = world.spawn(location, ItemDisplay.class);
-
-            PotionEffect effect = new PotionEffect(PotionEffectType.INVISIBILITY, 5000, 5, false, false);
-            arrow.addCustomEffect(effect, true);
 
             ItemStack displayItem;
 
@@ -161,7 +155,7 @@ public class GrappleHandler {
 
         if(event.isCancelled()) {
             if(display != null) display.remove();
-            arrow.remove(); //Remove the arrow.
+            arrow.remove();
             return;
         }
 

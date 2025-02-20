@@ -16,14 +16,9 @@
  */
 package me.albusthepenguin.skyline.Grappler;
 
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import lombok.NonNull;
 import me.albusthepenguin.skyline.Configs.Message;
 import me.albusthepenguin.skyline.Skyline;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -33,15 +28,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.profile.PlayerProfile;
-import org.bukkit.profile.PlayerTextures;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @SuppressWarnings("unused")
 public class Grappler {
@@ -144,75 +132,5 @@ public class Grappler {
         skull.setOwningPlayer(player);
         item.setItemMeta(skull);
         return item;
-    }
-
-    /**
-     * These are not needed yet :x
-     */
-    private final Gson gson = new Gson();
-
-    @NonNull
-    private PlayerProfile getPlayerProfile(@NonNull final String base64Url) {
-        final PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID());
-
-        final String decodedBase64 = decodeSkinUrl(base64Url);
-        if (decodedBase64 == null) {
-            return profile;
-        }
-
-        final PlayerTextures textures = profile.getTextures();
-
-        try {
-            textures.setSkin(new URL(decodedBase64));
-        } catch (final MalformedURLException exception) {
-            throw new IllegalArgumentException("Could not create skull because " + exception);
-        }
-
-        profile.setTextures(textures);
-        return profile;
-    }
-
-    /**
-     * Get the skull from a base64 encoded texture url
-     *
-     * @param base64Url base64 encoded url to use
-     * @return skull
-     */
-    @NonNull
-    public ItemStack getSkull(@NonNull final String base64Url) {
-        final ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-        if (base64Url.isEmpty()) {
-            return head;
-        }
-
-        final SkullMeta headMeta = (SkullMeta) head.getItemMeta();
-        if (headMeta == null) {
-            return head;
-        }
-
-        final PlayerProfile profile = getPlayerProfile(base64Url);
-        headMeta.setOwnerProfile(profile);
-        head.setItemMeta(headMeta);
-        return head;
-    }
-
-    private String decodeSkinUrl(@NonNull final String base64Texture) {
-        final String decoded = new String(Base64.getDecoder().decode(base64Texture));
-        final JsonObject object = gson.fromJson(decoded, JsonObject.class); // Use the Gson instance
-
-        final JsonElement textures = object.get("textures");
-
-        if (textures == null) {
-            return null;
-        }
-
-        final JsonElement skin = textures.getAsJsonObject().get("SKIN");
-
-        if (skin == null) {
-            return null;
-        }
-
-        final JsonElement url = skin.getAsJsonObject().get("url");
-        return url == null ? null : url.getAsString();
     }
 }
